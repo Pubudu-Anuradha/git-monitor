@@ -1,17 +1,36 @@
-use actix_web::{get, web, App, HttpServer, Responder, Result};
-use serde::Serialize;
+mod responses;
 
-#[derive(Serialize)]
-struct GenericResponse {
-    success: bool,
-    message: String,
-}
+use actix_web::{get, web, App, HttpServer, Responder, Result};
+use users::{get_current_uid, get_user_by_uid};
+use walkdir::WalkDir;
 
 #[get("/")]
 async fn hello() -> Result<impl Responder> {
-    let res = GenericResponse {
+    let user = get_user_by_uid(get_current_uid()).unwrap();
+    let username = user.name().to_str().unwrap();
+    let homedir = format!("/home/{}", username);
+
+    let walker = WalkDir::new(homedir)
+        .follow_links(false)
+        .max_depth(10)
+        .min_depth(1);
+
+    for entry in walker {
+        match entry {
+            Ok(dir) => {
+                if dir.file_type().is_dir() && dir.file_name().eq_ignore_ascii_case(".git") {
+                    std::println!("{}", dir.path().to_string_lossy());
+                }
+            }
+            Err(err) => {
+                std::println!("{}", err.to_string());
+            }
+        }
+    }
+
+    let res = responses::generic::GenericResponse {
         success: true,
-        message: "Hello World".to_string(),
+        message: "Hello ".to_string() + username,
     };
     Ok(web::Json(res))
 }
