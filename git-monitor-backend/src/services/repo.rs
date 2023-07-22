@@ -1,13 +1,14 @@
+use crate::services::user::get_home_dir;
 use actix_web::{
   get,
   web::{self, Json},
 };
-use git2::{Repository, RepositoryState, StatusEntry, StatusOptions};
+use git2::{
+  BranchType, Repository, RepositoryState, StatusEntry, StatusOptions,
+};
 use serde::Serialize;
 use std::path::Path;
 use walkdir::WalkDir;
-
-use crate::services::user::get_home_dir;
 
 #[derive(Serialize)]
 pub struct Repo {
@@ -16,6 +17,8 @@ pub struct Repo {
   pub is_valid: bool,
   pub state: String,
   pub statuses: Vec<String>,
+  pub local_branches: Vec<String>,
+  pub remote_branches: Vec<String>,
 }
 
 impl Repo {
@@ -24,11 +27,45 @@ impl Repo {
       Ok(repo) => {
         print!("");
         let mut options = StatusOptions::new();
+        let mut branch = repo.branches(Some(BranchType::Local)).unwrap();
+        let local_branches =
+          Vec::from_iter(branch.into_iter().map(|b| match b {
+            Ok((br, _)) => format!(
+              "{} {}",
+              match br.name() {
+                Ok(name) => match name {
+                  Some(n) => n,
+                  None => "Nobranch",
+                },
+                Err(_) => "Err",
+              },
+              match br.is_head() {
+                true => "HEAD",
+                false => "",
+              },
+            ),
+            Err(_) => "Err".to_string(),
+          }));
+        branch = repo.branches(Some(BranchType::Remote)).unwrap();
+        let remote_branches = Vec::from_iter(branch.into_iter().map(|b| {
+          match b {
+            Ok((br, _)) => match br.name() {
+              Ok(name) => match name {
+                Some(n) => n,
+                None => "Nobranch",
+              },
+              Err(_) => "Err",
+            }
+            .to_string(),
+            Err(_) => "Err".to_string(),
+          }
+        }));
+
         Self {
           name,
           dir,
           is_valid: true,
-          state: state_to_string(repo.state()).to_string(),
+          state: state_to_string(repo.state()),
           statuses: Vec::from_iter(
             repo
               .statuses(Some(&mut options))
@@ -36,6 +73,8 @@ impl Repo {
               .into_iter()
               .map(|s| status_to_string(s).to_string()),
           ),
+          local_branches,
+          remote_branches,
         }
       }
       Err(_) => Self {
@@ -44,41 +83,43 @@ impl Repo {
         is_valid: false,
         state: "invalid".to_string(),
         statuses: Vec::new(),
+        local_branches: Vec::new(),
+        remote_branches: Vec::new(),
       },
     }
   }
 }
 
-#[get("/repos")]
+#[get("/repos/scanlocal")]
 pub async fn get_all_repos<'a>() -> Json<Vec<Repo>> {
   let home_dir = get_home_dir();
   let root = Path::new(home_dir.as_str());
-  let repos = WalkDir::new(root)
-    .follow_links(false)
-    .into_iter()
-    .filter(|f| {
-      f.as_ref().is_ok_and(|d| {
-        d.file_type().is_dir() && d.file_name().eq_ignore_ascii_case(".git")
+  let repos = Vec::from_iter(
+    WalkDir::new(root)
+      .follow_links(false)
+      .into_iter()
+      .filter(|f| {
+        f.as_ref().is_ok_and(|d| {
+          d.file_type().is_dir() && d.file_name().eq_ignore_ascii_case(".git")
+        })
       })
-    })
-    .map(|f| f.unwrap())
-    .map(|dir_entry| {
-      let dir = dir_entry
-        .path()
-        .parent()
-        .unwrap_or(root)
-        .to_string_lossy()
-        .to_string();
-      // Trimming the prefix from the path
-      let name = dir[dir.rfind("/").unwrap_or(0) + 1..dir.len()].to_string();
-      Repo::new(name, dir)
-    });
-  let mut re: Vec<Repo> = Vec::new();
-  re.extend(repos);
-  web::Json(re)
+      .map(|f| f.unwrap())
+      .map(|dir_entry| {
+        let dir = dir_entry
+          .path()
+          .parent()
+          .unwrap_or(root)
+          .to_string_lossy()
+          .to_string();
+        // Trimming the prefix from the path
+        let name = dir[dir.rfind("/").unwrap_or(0) + 1..dir.len()].to_string();
+        Repo::new(name, dir)
+      }),
+  );
+  web::Json(repos)
 }
 
-fn state_to_string<'a>(state: RepositoryState) -> &'a str {
+fn state_to_string(state: RepositoryState) -> String {
   match state {
     RepositoryState::Clean => "Clean",
     RepositoryState::Merge => "Merge",
@@ -93,6 +134,7 @@ fn state_to_string<'a>(state: RepositoryState) -> &'a str {
     RepositoryState::ApplyMailbox => "ApplyMailbox",
     RepositoryState::ApplyMailboxOrRebase => "ApplyMailboxOrRebase",
   }
+  .to_string()
 }
 
 fn status_to_string(entry: StatusEntry) -> String {
@@ -112,6 +154,7 @@ fn status_to_string(entry: StatusEntry) -> String {
     git2::Status::CONFLICTED => "CONFLICTED",
     _ => "UNKNOWN",
   };
+
   let path = match entry.path() {
     Some(p) => p,
     None => "UNKNOWN",
