@@ -7,3 +7,7 @@ pub fn get_username() -> String {
         .to_string_lossy()
         .to_string()
 }
+
+pub fn get_home_dir() -> String {
+    format!("/home/{}", get_username())
+}
