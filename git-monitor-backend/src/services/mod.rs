@@ -1,2 +1,2 @@
-pub mod repo;
+pub mod repos;
 pub mod user;
