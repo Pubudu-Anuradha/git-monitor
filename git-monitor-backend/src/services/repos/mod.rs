@@ -31,6 +31,8 @@ pub struct Repo {
 pub struct Branch {
   name: String,
   branch_type: String,
+  is_head: bool,
+  upstream: String,
 }
 
 impl Repo {
@@ -39,17 +41,12 @@ impl Repo {
       Ok(repo) => {
         print!("");
         let mut options = StatusOptions::new();
-        let branches = Vec::from_iter(repo.branches(None).unwrap().map(|b| {
-          let b = b.unwrap();
-          Branch {
-            name: b.0.name().unwrap().unwrap().to_string(),
-            branch_type: match b.1 {
-              BranchType::Local => "Local",
-              BranchType::Remote => "Remote",
-            }
-            .to_string(),
-          }
-        }));
+        let branches = Vec::from_iter(
+          repo
+            .branches(None)
+            .unwrap()
+            .map(|b| Branch::new(b.unwrap())),
+        );
         Self {
           name,
           dir,
@@ -73,6 +70,26 @@ impl Repo {
         statuses: Vec::new(),
         branches: Vec::new(),
       },
+    }
+  }
+}
+
+impl Branch {
+  fn new(b: (git2::Branch, BranchType)) -> Self {
+    let branch = b.0;
+    let upstream = match branch.upstream() {
+      Ok(u) => u.name().unwrap().unwrap().to_string(),
+      Err(_) => "".to_string(),
+    };
+    Self {
+      name: branch.name().unwrap().unwrap().to_string(),
+      branch_type: match b.1 {
+        BranchType::Local => "Local",
+        BranchType::Remote => "Remote",
+      }
+      .to_string(),
+      is_head: branch.is_head(),
+      upstream,
     }
   }
 }
