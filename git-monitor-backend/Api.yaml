@@ -1,0 +1,84 @@
+openapi: "3.0.2"
+info:
+  title: Git monitor backend
+  version: "0.1.0"
+servers:
+  - url: http://localhost:8080
+paths:
+  /:
+    get:
+      responses:
+        "200":
+          description: OK
+  /repos:
+    get:
+      responses:
+        "200":
+          description: OK
+  /repos/repo:
+    get:
+      parameters:
+        - name: body
+          in: path
+          required: true
+          schema:
+            type: object
+            properties:
+              path:
+                type: string
+              absolute:
+                type: boolean
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+  /repos/scanlocal:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Repo"
+
+components:
+  schemas:
+    Repo:
+      type: object
+      properties:
+        name:
+          type: string
+        is_valid:
+          type: boolean
+        state:
+          type: string
+        statuses:
+          type: array
+          items:
+            type: string
+        branches:
+          type: array
+          items:
+            type: string
+    RepoArray:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+          is_valid:
+            type: boolean
+          state:
+            type: string
+          statuses:
+            type: array
+            items:
+              type: string
+          branches:
+            type: array
+            items:
+              type: string
