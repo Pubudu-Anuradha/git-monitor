@@ -1,9 +1,8 @@
-mod services;
-
 use actix_web::{
   web::{resource, scope},
   App, HttpResponse, HttpServer,
 };
+use git_monitor_backend::services;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

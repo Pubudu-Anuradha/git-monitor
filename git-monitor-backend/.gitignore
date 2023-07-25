@@ -1,2 +1,4 @@
 target/
 *.md
+prisma/*
+!prisma/schema.prisma

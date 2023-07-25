@@ -18,7 +18,8 @@ pub fn state_to_string(state: RepositoryState) -> String {
   .to_string()
 }
 
-pub fn status_to_string(entry: StatusEntry) -> String {
+#[allow(unused)]
+pub async fn status(entry: StatusEntry<'_>) -> (String, String) {
   let status = match entry.status() {
     git2::Status::CURRENT => "CURRENT",
     git2::Status::INDEX_NEW => "INDEX_NEW",
@@ -34,12 +35,13 @@ pub fn status_to_string(entry: StatusEntry) -> String {
     git2::Status::IGNORED => "IGNORED",
     git2::Status::CONFLICTED => "CONFLICTED",
     _ => "UNKNOWN",
-  };
+  }
+  .to_string();
 
   let path = match entry.path() {
     Some(p) => p,
     None => "UNKNOWN",
-  };
-
-  format!("{} : {}", status, path)
+  }
+  .to_string();
+  (status, path)
 }
