@@ -18,7 +18,6 @@ pub fn state_to_string(state: RepositoryState) -> String {
   .to_string()
 }
 
-#[allow(unused)]
 pub fn status(entry: StatusEntry<'_>) -> (String, String) {
   let status = match entry.status() {
     git2::Status::CURRENT => "CURRENT",
