@@ -36,4 +36,6 @@ model Branch {
   upstream    String?
   repoDir     String
   Repo        Repo    @relation("RepoToBranch", fields: [repoDir], references: [dir])
+
+  @@unique([name, repoDir])
 }

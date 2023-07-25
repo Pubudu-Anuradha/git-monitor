@@ -2681,6 +2681,12 @@ pub mod branch {
       }
     }
   }
+  pub fn name_repo_dir<T: From<UniqueWhereParam>>(
+    name: String,
+    repo_dir: String,
+  ) -> T {
+    UniqueWhereParam::NameRepoDirEquals(name, repo_dir).into()
+  }
   pub fn create(
     name: String,
     branch_type: String,
@@ -2964,6 +2970,7 @@ pub mod branch {
     Not(Vec<WhereParam>),
     Or(Vec<WhereParam>),
     And(Vec<WhereParam>),
+    NameRepoDirEquals(String, String),
     Id(_prisma::read_filters::IntFilter),
     Name(_prisma::read_filters::StringFilter),
     BranchType(_prisma::read_filters::StringFilter),
@@ -3012,6 +3019,19 @@ pub mod branch {
             ),
           ),
         ),
+        Self::NameRepoDirEquals(name, repo_dir) => (
+          "name_repoDir",
+          ::prisma_client_rust::SerializedWhereValue::Object(vec![
+            (
+              name::NAME.to_string(),
+              ::prisma_client_rust::PrismaValue::String(name),
+            ),
+            (
+              repo_dir::NAME.to_string(),
+              ::prisma_client_rust::PrismaValue::String(repo_dir),
+            ),
+          ]),
+        ),
         Self::Id(value) => (id::NAME, value.into()),
         Self::Name(value) => (name::NAME, value.into()),
         Self::BranchType(value) => (branch_type::NAME, value.into()),
@@ -3054,11 +3074,15 @@ pub mod branch {
   }
   #[derive(Clone)]
   pub enum UniqueWhereParam {
+    NameRepoDirEquals(String, String),
     IdEquals(i32),
   }
   impl From<UniqueWhereParam> for WhereParam {
     fn from(value: UniqueWhereParam) -> Self {
       match value {
+        UniqueWhereParam::NameRepoDirEquals(name, repo_dir) => {
+          Self::NameRepoDirEquals(name, repo_dir)
+        }
         UniqueWhereParam::IdEquals(value) => {
           Self::Id(_prisma::read_filters::IntFilter::Equals(value))
         }

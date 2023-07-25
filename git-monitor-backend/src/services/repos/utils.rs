@@ -19,7 +19,7 @@ pub fn state_to_string(state: RepositoryState) -> String {
 }
 
 #[allow(unused)]
-pub async fn status(entry: StatusEntry<'_>) -> (String, String) {
+pub fn status(entry: StatusEntry<'_>) -> (String, String) {
   let status = match entry.status() {
     git2::Status::CURRENT => "CURRENT",
     git2::Status::INDEX_NEW => "INDEX_NEW",
@@ -43,5 +43,5 @@ pub async fn status(entry: StatusEntry<'_>) -> (String, String) {
     None => "UNKNOWN",
   }
   .to_string();
-  (status, path)
+  (status.clone(), path.clone())
 }
