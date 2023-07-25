@@ -1,0 +1,42 @@
+// docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "cargo prisma"
+  output   = "../src/prisma.rs"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Repo {
+  dir       String   @id @unique
+  managed   Boolean
+  updatedAt DateTime @updatedAt
+  name      String
+  is_valid  Boolean
+  state     String
+  statuses  Status[] @relation("RepoToStatus")
+  branches  Branch[] @relation("RepoToBranch")
+}
+
+model Status {
+  id      Int    @id @default(autoincrement())
+  status  String
+  path    String
+  Repo    Repo   @relation("RepoToStatus", fields: [repoDir], references: [dir])
+  repoDir String
+}
+
+model Branch {
+  id          Int     @id @default(autoincrement())
+  name        String
+  branch_type String
+  is_head     Boolean
+  upstream    String?
+  repoDir     String
+  Repo        Repo    @relation("RepoToBranch", fields: [repoDir], references: [dir])
+
+  @@unique([name, repoDir])
+}
