@@ -12,6 +12,7 @@ datasource db {
 
 model Repo {
   dir       String   @id @unique
+  managed   Boolean
   updatedAt DateTime @updatedAt
   name      String
   is_valid  Boolean
