@@ -21,7 +21,9 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: git-monitor-backend
-            git-monitor-backend/prisma-cli
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: git-monitor-backend/prisma-cli
       - name: Run tests
         working-directory: ./git-monitor-backend
         run: |
