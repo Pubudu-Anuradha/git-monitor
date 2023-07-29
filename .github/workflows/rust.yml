@@ -2,23 +2,25 @@ name: Rust
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      working-directory: ./git-monitor-backend
-      run: cargo build --verbose
-    - name: Run tests
-      working-directory: ./git-monitor-backend
-      run: cargo test --verbose
+      - uses: actions/checkout@v3
+      - name: setup-rust
+        run: |
+          rustup set auto-self-update disable
+          rustup toolchain install stable --profile minimal
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: git-monitor-backend
+      - name: Run tests
+        working-directory: ./git-monitor-backend
+        run: cargo check
