@@ -13,6 +13,7 @@ prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust
     "sqlite",
 ] }
 futures = "0.3.28"
+actix-cors = "0.6.4"
 
 [dev-dependencies]
 structopt = "0.3"

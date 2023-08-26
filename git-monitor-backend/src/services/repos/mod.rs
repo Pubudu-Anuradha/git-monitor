@@ -5,6 +5,7 @@ use super::user::get_home_dir;
 use crate::get_prisma_connection;
 use actix_web::web::{self, Json};
 use git2::Repository;
+use prisma_client_rust::QueryError;
 use std::path::Path;
 use walkdir::WalkDir;
 
@@ -12,7 +13,6 @@ pub fn repos() -> actix_web::Scope {
   web::scope("")
     .service(web::resource("").to(get_all))
     .service(web::resource("/update").to(update_repos))
-    .service(web::resource("/all").to(get_all))
     .service(
       web::resource("/repo")
         .route(web::get().to(get_repo))
@@ -174,6 +174,7 @@ async fn update_repo(repo: String) {
 
 async fn get_all(
 ) -> Json<Result<Vec<repo::Data>, prisma_client_rust::QueryError>> {
+  println!("Getting all repos");
   let conn = get_prisma_connection().await;
   Json(
     conn
@@ -237,7 +238,7 @@ pub struct SetRepoRequest {
 
 async fn set_repo(
   req: web::Json<SetRepoRequest>,
-) -> Json<Result<repo::Data, prisma_client_rust::QueryError>> {
+) -> actix_web::web::Json<Result<std::option::Option<prisma::repo::Data>, QueryError>> {
   let path = req
     .path
     .as_str()
@@ -255,13 +256,21 @@ async fn set_repo(
     ),
   };
   let conn = get_prisma_connection().await;
+  let __ = update_repo(abs_path.clone()).await;
+  let _ = conn
+      .repo()
+      .update(
+        prisma::repo::UniqueWhereParam::DirEquals(abs_path.clone()),
+        vec![prisma::repo::managed::set(req.managed)],
+      )
+      .exec()
+      .await;
   Json(
     conn
       .repo()
-      .update(
-        prisma::repo::UniqueWhereParam::DirEquals(abs_path),
-        vec![prisma::repo::managed::set(req.managed)],
-      )
+      .find_unique(repo::UniqueWhereParam::DirEquals(abs_path))
+      .with(prisma::repo::branches::fetch(vec![]))
+      .with(prisma::repo::statuses::fetch(vec![]))
       .exec()
       .await,
   )
