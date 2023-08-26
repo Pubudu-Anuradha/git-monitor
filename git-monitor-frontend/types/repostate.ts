@@ -1,0 +1,13 @@
+export type RepoState =
+  | 'Clean'
+  | 'Merge'
+  | 'Revert'
+  | 'RevertSequence'
+  | 'CherryPick'
+  | 'CheeryPickSequence'
+  | 'Bisect'
+  | 'Rebase'
+  | 'RebaseInteractive'
+  | 'RebaseMerge'
+  | 'ApplyMailbox'
+  | 'ApplyMailboxOrRebase'
