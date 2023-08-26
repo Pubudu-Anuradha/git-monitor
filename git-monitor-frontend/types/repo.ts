@@ -1,8 +1,8 @@
-import Branch from "./branch"
-import type { RepoState } from "./repostate"
-import FileStatus from "./status"
+import { Branch } from "./branch"
+import type { RepoState } from "./repoState"
+import { FileStatus } from "./status"
 
-export default interface Repo {
+export interface Repository {
   dir: string
   state: RepoState
   name: string

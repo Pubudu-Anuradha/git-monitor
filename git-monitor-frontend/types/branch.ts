@@ -1,4 +1,4 @@
-export default interface Branch {
+export interface Branch {
   id: number
   name: string
   branch_type: string
