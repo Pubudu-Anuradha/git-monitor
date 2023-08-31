@@ -1,6 +1,6 @@
-import { Status } from "~/types/status"
+import { Status } from '~/types/status'
 
-export const status_to_string = (status: Status) => {
+export const statusToString = (status: Status) => {
   let res
   switch (status) {
     case 'CURRENT':

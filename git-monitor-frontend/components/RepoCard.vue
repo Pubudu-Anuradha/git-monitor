@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Repository } from 'types/repo'
+import { Repository } from '~/types/repo'
+import { statusToString } from '~/utils/statusToString'
 
 defineProps<{
   repo: Repository
@@ -12,7 +13,9 @@ defineProps<{
     class="max-w-xl overflow-hidden p-4 rounded-md shadow-md bg-stone-100 dark:bg-stone-800 flex flex-col gap-2"
   >
     <div class="flex justify-between align-middle">
-      <h1 class="font-bold text-xl italic">{{ repo.name }} : {{ repo.state }}</h1>
+      <h1 class="font-bold text-xl italic">
+        {{ repo.name }} : {{ repo.state }}
+      </h1>
       <button @click="updater(repo, !repo.managed)">
         toggle monitoring with git-monitor
       </button>
@@ -26,7 +29,7 @@ defineProps<{
       {{ repo.dir }}
     </div>
     <ul>
-      <li v-for="branch in repo.branches">
+      <li v-for="branch in repo.branches" :key="branch.id">
         {{ branch.branch_type }} : {{ branch.name }}
         <span v-if="branch.is_head" class="text-red-500">HEAD</span>
       </li>
@@ -37,10 +40,11 @@ defineProps<{
         v-for="status in repo.statuses.filter((s) =>
           s.status.startsWith('WT_'),
         )"
+        :key="status.path"
         class="grid grid-cols-2 grid-flow-col"
       >
         <span>
-          {{ status_to_string(status.status) }}
+          {{ statusToString(status.status) }}
         </span>
         <span>
           {{ status.path }}
@@ -53,10 +57,11 @@ defineProps<{
         v-for="status in repo.statuses.filter((s) =>
           s.status.startsWith('INDEX_'),
         )"
+        :key="status.path"
         class="grid grid-cols-2 grid-flow-col"
       >
         <span>
-          {{ status_to_string(status.status) }}
+          {{ statusToString(status.status) }}
         </span>
         <span>
           {{ status.path }}
@@ -69,10 +74,11 @@ defineProps<{
         v-for="status in repo.statuses.filter(
           (s) => !s.status.startsWith('WT_') && !s.status.startsWith('INDEX_'),
         )"
+        :key="status.path"
         class="grid grid-cols-2 grid-flow-col"
       >
         <span>
-          {{ status_to_string(status.status) }}
+          {{ statusToString(status.status) }}
         </span>
         <span>
           {{ status.path }}

@@ -1,14 +1,15 @@
-import { Branch } from "./branch"
-import type { RepoState } from "./repoState"
-import { FileStatus } from "./status"
+import type { RepoState } from './repoState'
+
+import { Branch } from './branch'
+import { FileStatus } from './status'
 
 export interface Repository {
+  branches: Branch[]
   dir: string
-  state: RepoState
-  name: string
   is_valid: boolean
   managed: boolean
-  updatedAt: Date
+  name: string
+  state: RepoState
   statuses: FileStatus[]
-  branches: Branch[]
+  updatedAt: Date
 }

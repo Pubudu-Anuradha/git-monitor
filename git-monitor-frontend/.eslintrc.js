@@ -5,4 +5,5 @@ module.exports = {
     'plugin:perfectionist/recommended-natural',
   ],
   root: true,
+  rules: { 'import/order': 'off' },
 }
