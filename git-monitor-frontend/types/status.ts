@@ -1,20 +1,20 @@
 export type Status =
+  | 'CONFLICTED'
   | 'CURRENT'
-  | 'INDEX_NEW'
-  | 'INDEX_MODIFIED'
+  | 'IGNORED'
   | 'INDEX_DELETED'
+  | 'INDEX_MODIFIED'
+  | 'INDEX_NEW'
   | 'INDEX_RENAMED'
   | 'INDEX_TYPECHANGE'
-  | 'WT_NEW'
-  | 'WT_MODIFIED'
   | 'WT_DELETED'
-  | 'WT_TYPECHANGE'
+  | 'WT_MODIFIED'
+  | 'WT_NEW'
   | 'WT_RENAMED'
-  | 'IGNORED'
-  | 'CONFLICTED'
+  | 'WT_TYPECHANGE'
 
 export interface FileStatus {
   id: number
-  status: Status
   path: string
+  status: Status
 }

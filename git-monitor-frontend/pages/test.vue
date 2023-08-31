@@ -1,41 +1,45 @@
 <script setup lang="ts">
+import { getAllRepos, updateRepo as uR, updateAllRepos } from '~/api/repos'
 import { Repository } from '~/types/repo'
-import { get_all_repos, update_all_repos, update_repo } from '~/api/repos'
 
-let repoData = ref<Repository[]>([])
+const repoData = ref<Repository[]>([])
 
 const fetchRepos = async () => {
-  const response = await get_all_repos()
+  const response = await getAllRepos()
   response.Ok.forEach((repo) => {
+    // eslint-disable-next-line no-console
     console.log(
       repo.name,
       new Date(repo.updatedAt).toLocaleDateString('en-US', {
         day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
       }),
     )
   })
-  const reg = new RegExp(/^.*git-monitor.*$/)
+  const reg = /^.*git-monitor.*$/
 
   repoData.value = response.Ok.filter(
     (repo) => repo.is_valid && reg.test(repo.dir),
   )
 }
 
-let loading = ref(false)
+const loading = ref(false)
 const updateRepos = async () => {
   loading.value = true
-  await update_all_repos()
+  await updateAllRepos()
   loading.value = false
   await fetchRepos()
 }
 
-const updateRepo = async (repo: Repository,managed: boolean | null) => {
+const updateRepo = async (repo: Repository, managed: boolean | null) => {
   loading.value = true
-  const result = (await update_repo(repo.dir, true, managed === null ? repo.managed : managed)).Ok
+  const result = (
+    await uR(repo.dir, true, managed === null ? repo.managed : managed)
+  ).Ok
+  // eslint-disable-next-line no-console
   console.log(result)
   repoData.value = repoData.value.map((r) => {
     if (r.dir === repo.dir) {
@@ -55,8 +59,8 @@ const updateRepo = async (repo: Repository,managed: boolean | null) => {
       <button @click="updateRepos">Update repos</button>
       <span> Loading: {{ loading }} </span>
     </div>
-    <div v-for="repo in repoData" class="repos">
-      <Repo :repo="repo" :updater="updateRepo" />
+    <div v-for="repo in repoData" :key="repo.dir" class="repos">
+      <repo-card :repo="repo" :updater="updateRepo" />
     </div>
   </div>
 </template>

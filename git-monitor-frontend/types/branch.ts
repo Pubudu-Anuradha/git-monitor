@@ -1,8 +1,8 @@
 export interface Branch {
-  id: number
-  name: string
   branch_type: string
+  id: number
   is_head: boolean
-  upstream?: string
+  name: string
   repoDir: string
+  upstream?: string
 }
