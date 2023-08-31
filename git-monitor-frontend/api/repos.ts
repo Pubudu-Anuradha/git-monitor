@@ -1,6 +1,5 @@
-import type { Repository } from 'types/repo'
+import type { Repository } from '~/types/repo'
 
-// eslint-disable-next-line import/order
 import { apiInstance } from './api'
 
 export const getAllRepos = async () => {
