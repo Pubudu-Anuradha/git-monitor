@@ -55,8 +55,8 @@ const updateRepo = async (repo: Repository, managed: boolean | null) => {
   <div>
     <h1>Welcome to the test page</h1>
     <div class="flex flex-col gap-2">
-      <button @click="fetchRepos">Fetch repos</button>
-      <button @click="updateRepos">Update repos</button>
+      <v-btn @click="fetchRepos">Fetch repos</v-btn>
+      <v-btn @click="updateRepos">Update repos</v-btn>
       <span> Loading: {{ loading }} </span>
     </div>
     <div v-for="repo in repoData" :key="repo.dir" class="repos">
