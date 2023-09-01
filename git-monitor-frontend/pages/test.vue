@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { getAllRepos, updateRepo as uR, updateAllRepos } from '~/api/repos'
-import { Repository } from '~/types/repo'
-
 const repoData = ref<Repository[]>([])
 
 const fetchRepos = async () => {
-  const response = await getAllRepos()
+  const response = await repos.getAllRepos()
   response.Ok.forEach((repo) => {
     // eslint-disable-next-line no-console
     console.log(
@@ -29,7 +26,7 @@ const fetchRepos = async () => {
 const loading = ref(false)
 const updateRepos = async () => {
   loading.value = true
-  await updateAllRepos()
+  await repos.updateAllRepos()
   loading.value = false
   await fetchRepos()
 }
@@ -37,7 +34,11 @@ const updateRepos = async () => {
 const updateRepo = async (repo: Repository, managed: boolean | null) => {
   loading.value = true
   const result = (
-    await uR(repo.dir, true, managed === null ? repo.managed : managed)
+    await repos.updateRepo(
+      repo.dir,
+      true,
+      managed === null ? repo.managed : managed,
+    )
   ).Ok
   // eslint-disable-next-line no-console
   console.log(result)

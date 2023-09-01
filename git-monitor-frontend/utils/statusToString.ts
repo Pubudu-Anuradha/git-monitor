@@ -1,5 +1,3 @@
-import { Status } from '~/types/status'
-
 export const statusToString = (status: Status) => {
   let res
   switch (status) {

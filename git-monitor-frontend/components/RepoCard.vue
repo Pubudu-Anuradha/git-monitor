@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { Repository } from '~/types/repo'
-import { statusToString } from '~/utils/statusToString'
-
 defineProps<{
   repo: Repository
   updater: (repo: Repository, managed: boolean | null) => Promise<void>
@@ -94,3 +91,4 @@ h2 {
   margin-bottom: 0.5rem;
 }
 </style>
+~/composables/types/repo
