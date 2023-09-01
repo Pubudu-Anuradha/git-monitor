@@ -10,8 +10,8 @@ use std::path::Path;
 use walkdir::WalkDir;
 
 pub fn repos() -> actix_web::Scope {
-  web::scope("")
-    .service(web::resource("").to(get_all))
+  web::scope("repos")
+    .service(web::resource("/all").to(get_all))
     .service(web::resource("/update").to(update_repos))
     .service(
       web::resource("/repo")

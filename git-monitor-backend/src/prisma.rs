@@ -3323,6 +3323,1545 @@ pub mod branch {
     }
   }
 }
+pub mod git_config {
+  use super::_prisma::*;
+  use super::*;
+  pub const NAME: &str = "gitConfig";
+  pub mod id {
+    use super::super::*;
+    use super::_prisma::*;
+    use super::{
+      OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
+      WithParam,
+    };
+    pub const NAME: &str = "id";
+    pub struct Set(pub i32);
+    impl From<Set> for SetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::SetId(v)
+      }
+    }
+    impl From<Set> for UncheckedSetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::Id(v)
+      }
+    }
+    pub fn set<T: From<Set>>(value: i32) -> T {
+      Set(value).into()
+    }
+    pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+      OrderByParam::Id(direction)
+    }
+    pub fn equals<T: From<UniqueWhereParam>>(value: i32) -> T {
+      UniqueWhereParam::IdEquals(value).into()
+    }
+    ::prisma_client_rust::scalar_where_param_fns!(
+      _prisma::read_filters::IntFilter,
+      Id,
+      {
+        fn in_vec(_: Vec<i32>) -> InVec;
+        fn not_in_vec(_: Vec<i32>) -> NotInVec;
+        fn lt(_: i32) -> Lt;
+        fn lte(_: i32) -> Lte;
+        fn gt(_: i32) -> Gt;
+        fn gte(_: i32) -> Gte;
+        fn not(_: i32) -> Not;
+      }
+    );
+    pub fn increment(value: i32) -> SetParam {
+      SetParam::IncrementId(value)
+    }
+    pub fn decrement(value: i32) -> SetParam {
+      SetParam::DecrementId(value)
+    }
+    pub fn multiply(value: i32) -> SetParam {
+      SetParam::MultiplyId(value)
+    }
+    pub fn divide(value: i32) -> SetParam {
+      SetParam::DivideId(value)
+    }
+    pub struct Include;
+    impl Into<super::IncludeParam> for Include {
+      fn into(self) -> super::IncludeParam {
+        super::IncludeParam::Id(self)
+      }
+    }
+    impl Include {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+    pub struct Select;
+    impl Into<super::SelectParam> for Select {
+      fn into(self) -> super::SelectParam {
+        super::SelectParam::Id(self)
+      }
+    }
+    impl Select {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+  }
+  pub mod entries {
+    use super::super::*;
+    use super::_prisma::*;
+    use super::{
+      OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
+      WithParam,
+    };
+    pub const NAME: &str = "entries";
+    pub struct Fetch(pub git_config_entry::ManyArgs);
+    impl Fetch {
+      pub fn with(
+        mut self,
+        params: impl Into<git_config_entry::WithParam>,
+      ) -> Self {
+        self.0 = self.0.with(params.into());
+        self
+      }
+      pub fn order_by(mut self, param: git_config_entry::OrderByParam) -> Self {
+        self.0 = self.0.order_by(param);
+        self
+      }
+      pub fn skip(mut self, value: i64) -> Self {
+        self.0 = self.0.skip(value);
+        self
+      }
+      pub fn take(mut self, value: i64) -> Self {
+        self.0 = self.0.take(value);
+        self
+      }
+      pub fn cursor(
+        mut self,
+        value: git_config_entry::UniqueWhereParam,
+      ) -> Self {
+        self.0 = self.0.cursor(value.into());
+        self
+      }
+    }
+    impl From<Fetch> for WithParam {
+      fn from(Fetch(v): Fetch) -> Self {
+        WithParam::Entries(v)
+      }
+    }
+    pub fn fetch(params: Vec<git_config_entry::WhereParam>) -> Fetch {
+      Fetch(git_config_entry::ManyArgs::new(params))
+    }
+    pub struct Connect(pub Vec<git_config_entry::UniqueWhereParam>);
+    impl From<Connect> for SetParam {
+      fn from(Connect(v): Connect) -> Self {
+        Self::ConnectEntries(v)
+      }
+    }
+    pub fn connect<T: From<Connect>>(
+      params: Vec<git_config_entry::UniqueWhereParam>,
+    ) -> T {
+      Connect(params).into()
+    }
+    pub fn disconnect(
+      params: Vec<git_config_entry::UniqueWhereParam>,
+    ) -> SetParam {
+      SetParam::DisconnectEntries(params)
+    }
+    pub fn set(params: Vec<git_config_entry::UniqueWhereParam>) -> SetParam {
+      SetParam::SetEntries(params)
+    }
+    pub fn some(value: Vec<git_config_entry::WhereParam>) -> WhereParam {
+      WhereParam::EntriesSome(value)
+    }
+    pub fn every(value: Vec<git_config_entry::WhereParam>) -> WhereParam {
+      WhereParam::EntriesEvery(value)
+    }
+    pub fn none(value: Vec<git_config_entry::WhereParam>) -> WhereParam {
+      WhereParam::EntriesNone(value)
+    }
+    pub enum Include {
+      Select(
+        git_config_entry::ManyArgs,
+        Vec<git_config_entry::SelectParam>,
+      ),
+      Include(
+        git_config_entry::ManyArgs,
+        Vec<git_config_entry::IncludeParam>,
+      ),
+      Fetch(git_config_entry::ManyArgs),
+    }
+    impl Into<super::IncludeParam> for Include {
+      fn into(self) -> super::IncludeParam {
+        super::IncludeParam::Entries(self)
+      }
+    }
+    impl Include {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        let (args , selections) = match self { Self :: Select (args , selections) => (args . to_graphql () . 0 , selections . into_iter () . map (| s | s . to_selection ()) . collect ()) , Self :: Include (args , selections) => (args . to_graphql () . 0 , { let mut nested_selections = < git_config_entry :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections () ; nested_selections . extend (selections . into_iter () . map (| s | s . to_selection ())) ; nested_selections }) , Self :: Fetch (args) => (args . to_graphql () . 0 , < git_config_entry :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()) } ;
+        ::prisma_client_rust::Selection::new(NAME, None, args, selections)
+      }
+      pub fn select(
+        args: git_config_entry::ManyArgs,
+        nested_selections: Vec<git_config_entry::SelectParam>,
+      ) -> Self {
+        Self::Select(args, nested_selections)
+      }
+      pub fn include(
+        args: git_config_entry::ManyArgs,
+        nested_selections: Vec<git_config_entry::IncludeParam>,
+      ) -> Self {
+        Self::Include(args, nested_selections)
+      }
+    }
+    pub enum Select {
+      Select(
+        git_config_entry::ManyArgs,
+        Vec<git_config_entry::SelectParam>,
+      ),
+      Include(
+        git_config_entry::ManyArgs,
+        Vec<git_config_entry::IncludeParam>,
+      ),
+      Fetch(git_config_entry::ManyArgs),
+    }
+    impl Into<super::SelectParam> for Select {
+      fn into(self) -> super::SelectParam {
+        super::SelectParam::Entries(self)
+      }
+    }
+    impl Select {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        let (args , selections) = match self { Self :: Select (args , selections) => (args . to_graphql () . 0 , selections . into_iter () . map (| s | s . to_selection ()) . collect ()) , Self :: Include (args , selections) => (args . to_graphql () . 0 , { let mut nested_selections = vec ! [] ; nested_selections . extend (selections . into_iter () . map (| s | s . to_selection ())) ; nested_selections }) , Self :: Fetch (args) => (args . to_graphql () . 0 , < git_config_entry :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()) } ;
+        ::prisma_client_rust::Selection::new(NAME, None, args, selections)
+      }
+      pub fn select(
+        args: git_config_entry::ManyArgs,
+        nested_selections: Vec<git_config_entry::SelectParam>,
+      ) -> Self {
+        Self::Select(args, nested_selections)
+      }
+      pub fn include(
+        args: git_config_entry::ManyArgs,
+        nested_selections: Vec<git_config_entry::IncludeParam>,
+      ) -> Self {
+        Self::Include(args, nested_selections)
+      }
+    }
+  }
+  pub fn create(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+    (_params)
+  }
+  pub fn create_unchecked(_params: Vec<SetParam>) -> (Vec<SetParam>) {
+    (_params)
+  }
+  #[macro_export]
+  macro_rules ! _select_git_config { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: git_config :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: git_config :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: git_config :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: git_config :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: git_config :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: git_config :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , entries } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: git_config :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: git_config :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: git_config :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: git_config :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "entries"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: git_config :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { i32 } ; (@ field_type ; entries : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < entries :: Data > } ; (@ field_type ; entries) => { Vec < crate :: prisma :: git_config_entry :: Data > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "GitConfig" , available relations are "id, entries")) } ; (@ field_module ; entries : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: git_config_entry :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: git_config :: SelectParam > :: into (crate :: prisma :: git_config :: id :: Select) } ; (@ selection_field_to_selection_param ; entries $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: git_config :: SelectParam > :: into (crate :: prisma :: git_config :: entries :: Select :: $ selection_mode (crate :: prisma :: git_config_entry :: ManyArgs :: new (crate :: prisma :: git_config_entry :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: git_config_entry :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; entries $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: git_config :: SelectParam > :: into (crate :: prisma :: git_config :: entries :: Select :: Fetch (crate :: prisma :: git_config_entry :: ManyArgs :: new (crate :: prisma :: git_config_entry :: select ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: git_config :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; entries) => { "entries" } ; }
+  pub use _select_git_config as select;
+  pub enum SelectParam {
+    Id(id::Select),
+    Entries(entries::Select),
+  }
+  impl SelectParam {
+    pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+      match self {
+        Self::Id(data) => data.to_selection(),
+        Self::Entries(data) => data.to_selection(),
+      }
+    }
+  }
+  #[macro_export]
+  macro_rules ! _include_git_config { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: git_config :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: git_config :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: git_config :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: git_config :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: git_config :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: git_config :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: git_config :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: git_config :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { entries } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : i32 , $ (pub $ field : crate :: prisma :: git_config :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: git_config :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: git_config :: id :: NAME , & self . id) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: git_config :: $ field :: NAME) , + , crate :: prisma :: git_config :: id :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: git_config :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: git_config :: id :: NAME => Ok (Field :: id) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config :: id :: NAME)) ? ; Ok (Data { id , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "entries"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: git_config :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; entries : $ selection_mode : ident { $ ($ selections : tt) + }) => { Vec < entries :: Data > } ; (@ field_type ; entries) => { Vec < crate :: prisma :: git_config_entry :: Data > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "GitConfig" , available relations are "entries")) } ; (@ field_module ; entries : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: git_config_entry :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; entries $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: git_config :: IncludeParam > :: into (crate :: prisma :: git_config :: entries :: Include :: $ selection_mode (crate :: prisma :: git_config_entry :: ManyArgs :: new (crate :: prisma :: git_config_entry :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ? , crate :: prisma :: git_config_entry :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; entries $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: git_config :: IncludeParam > :: into (crate :: prisma :: git_config :: entries :: Include :: Fetch (crate :: prisma :: git_config_entry :: ManyArgs :: new (crate :: prisma :: git_config_entry :: include ! (@ filters_to_args ; $ ($ ($ filters) +) ?)) $ ($ (. $ arg ($ ($ arg_params) *)) *) ?) ,) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: git_config :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; entries) => { "entries" } ; }
+  pub use _include_git_config as include;
+  pub enum IncludeParam {
+    Id(id::Include),
+    Entries(entries::Include),
+  }
+  impl IncludeParam {
+    pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+      match self {
+        Self::Id(data) => data.to_selection(),
+        Self::Entries(data) => data.to_selection(),
+      }
+    }
+  }
+  #[macro_export]
+  macro_rules ! _partial_unchecked_git_config { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: git_config struct $ struct_name { # [serde (rename = "id")] pub id : i32 } [$ ($ scalar_field) , +] } } ; }
+  pub use _partial_unchecked_git_config as partial_unchecked;
+  #[derive(Debug, Clone, :: serde :: Serialize, :: serde :: Deserialize)]
+  pub struct Data {
+    #[serde(rename = "id")]
+    pub id: i32,
+    #[serde(rename = "entries")]
+    pub entries: Option<Vec<super::git_config_entry::Data>>,
+  }
+  impl Data {
+    pub fn entries(
+      &self,
+    ) -> Result<
+      &Vec<super::git_config_entry::Data>,
+      ::prisma_client_rust::RelationNotFetchedError,
+    > {
+      self.entries.as_ref().ok_or(
+        ::prisma_client_rust::RelationNotFetchedError::new(stringify!(entries)),
+      )
+    }
+  }
+  #[derive(Clone)]
+  pub enum WithParam {
+    Entries(super::git_config_entry::ManyArgs),
+  }
+  impl Into<::prisma_client_rust::Selection> for WithParam {
+    fn into(self) -> ::prisma_client_rust::Selection {
+      match self {
+        Self::Entries(args) => {
+          let (arguments, mut nested_selections) = args.to_graphql();
+          nested_selections . extend (< super :: git_config_entry :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()) ;
+          ::prisma_client_rust::Selection::new(
+            entries::NAME,
+            None,
+            arguments,
+            nested_selections,
+          )
+        }
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub enum SetParam {
+    SetId(i32),
+    IncrementId(i32),
+    DecrementId(i32),
+    MultiplyId(i32),
+    DivideId(i32),
+    ConnectEntries(Vec<super::git_config_entry::UniqueWhereParam>),
+    DisconnectEntries(Vec<super::git_config_entry::UniqueWhereParam>),
+    SetEntries(Vec<super::git_config_entry::UniqueWhereParam>),
+  }
+  impl From<SetParam> for (String, ::prisma_client_rust::PrismaValue) {
+    fn from(param: SetParam) -> Self {
+      match param {
+        SetParam::SetId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Int(value as i64),
+        ),
+        SetParam::IncrementId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "increment".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::DecrementId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "decrement".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::MultiplyId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "multiply".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::DivideId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "divide".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::ConnectEntries(where_params) => (
+          entries::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "connect".to_string(),
+            ::prisma_client_rust::PrismaValue::List(
+              where_params
+                .into_iter()
+                .map(Into::<super::git_config_entry::WhereParam>::into)
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .map(|v| ::prisma_client_rust::PrismaValue::Object(vec![v]))
+                .collect(),
+            ),
+          )]),
+        ),
+        SetParam::DisconnectEntries(where_params) => (
+          entries::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "disconnect".to_string(),
+            ::prisma_client_rust::PrismaValue::List(
+              where_params
+                .into_iter()
+                .map(Into::<super::git_config_entry::WhereParam>::into)
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .map(|v| ::prisma_client_rust::PrismaValue::Object(vec![v]))
+                .collect(),
+            ),
+          )]),
+        ),
+        SetParam::SetEntries(where_params) => (
+          entries::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "set".to_string(),
+            ::prisma_client_rust::PrismaValue::List(
+              where_params
+                .into_iter()
+                .map(Into::<super::git_config_entry::WhereParam>::into)
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .map(|v| ::prisma_client_rust::PrismaValue::Object(vec![v]))
+                .collect(),
+            ),
+          )]),
+        ),
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub enum UncheckedSetParam {
+    Id(i32),
+  }
+  impl From<UncheckedSetParam> for SetParam {
+    fn from(param: UncheckedSetParam) -> Self {
+      match param {
+        UncheckedSetParam::Id(value) => Self::SetId(value),
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub enum OrderByParam {
+    Id(::prisma_client_rust::Direction),
+  }
+  impl Into<(String, ::prisma_client_rust::PrismaValue)> for OrderByParam {
+    fn into(self) -> (String, ::prisma_client_rust::PrismaValue) {
+      match self {
+        Self::Id(direction) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+        ),
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub enum WhereParam {
+    Not(Vec<WhereParam>),
+    Or(Vec<WhereParam>),
+    And(Vec<WhereParam>),
+    Id(_prisma::read_filters::IntFilter),
+    EntriesSome(Vec<super::git_config_entry::WhereParam>),
+    EntriesEvery(Vec<super::git_config_entry::WhereParam>),
+    EntriesNone(Vec<super::git_config_entry::WhereParam>),
+  }
+  impl ::prisma_client_rust::WhereInput for WhereParam {
+    fn serialize(self) -> ::prisma_client_rust::SerializedWhereInput {
+      let (name, value) = match self {
+        Self::Not(value) => (
+          "NOT",
+          ::prisma_client_rust::SerializedWhereValue::Object(
+            ::prisma_client_rust::merge_fields(
+              value
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(Into::into)
+                .collect(),
+            ),
+          ),
+        ),
+        Self::Or(value) => (
+          "OR",
+          ::prisma_client_rust::SerializedWhereValue::List(
+            value
+              .into_iter()
+              .map(::prisma_client_rust::WhereInput::serialize)
+              .map(Into::into)
+              .map(|v| vec![v])
+              .map(::prisma_client_rust::PrismaValue::Object)
+              .collect(),
+          ),
+        ),
+        Self::And(value) => (
+          "AND",
+          ::prisma_client_rust::SerializedWhereValue::Object(
+            ::prisma_client_rust::merge_fields(
+              value
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(Into::into)
+                .collect(),
+            ),
+          ),
+        ),
+        Self::Id(value) => (id::NAME, value.into()),
+        Self::EntriesSome(where_params) => (
+          entries::NAME,
+          ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+            "some".to_string(),
+            ::prisma_client_rust::PrismaValue::Object(
+              where_params
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .collect(),
+            ),
+          )]),
+        ),
+        Self::EntriesEvery(where_params) => (
+          entries::NAME,
+          ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+            "every".to_string(),
+            ::prisma_client_rust::PrismaValue::Object(
+              where_params
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .collect(),
+            ),
+          )]),
+        ),
+        Self::EntriesNone(where_params) => (
+          entries::NAME,
+          ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+            "none".to_string(),
+            ::prisma_client_rust::PrismaValue::Object(
+              where_params
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .collect(),
+            ),
+          )]),
+        ),
+      };
+      ::prisma_client_rust::SerializedWhereInput::new(name, value.into())
+    }
+  }
+  #[derive(Clone)]
+  pub enum UniqueWhereParam {
+    IdEquals(i32),
+  }
+  impl From<UniqueWhereParam> for WhereParam {
+    fn from(value: UniqueWhereParam) -> Self {
+      match value {
+        UniqueWhereParam::IdEquals(value) => {
+          Self::Id(_prisma::read_filters::IntFilter::Equals(value))
+        }
+      }
+    }
+  }
+  impl From<::prisma_client_rust::Operator<Self>> for WhereParam {
+    fn from(op: ::prisma_client_rust::Operator<Self>) -> Self {
+      match op {
+        ::prisma_client_rust::Operator::Not(value) => Self::Not(value),
+        ::prisma_client_rust::Operator::And(value) => Self::And(value),
+        ::prisma_client_rust::Operator::Or(value) => Self::Or(value),
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub struct Types;
+  impl ::prisma_client_rust::ModelTypes for Types {
+    type Data = Data;
+    type Where = WhereParam;
+    type UncheckedSet = UncheckedSetParam;
+    type Set = SetParam;
+    type With = WithParam;
+    type OrderBy = OrderByParam;
+    type Cursor = UniqueWhereParam;
+    const MODEL: &'static str = NAME;
+    fn scalar_selections() -> Vec<::prisma_client_rust::Selection> {
+      vec![::prisma_client_rust::sel(id::NAME)]
+    }
+  }
+  pub type UniqueArgs = ::prisma_client_rust::UniqueArgs<Types>;
+  pub type ManyArgs = ::prisma_client_rust::ManyArgs<Types>;
+  pub type Count<'a> = ::prisma_client_rust::Count<'a, Types>;
+  pub type Create<'a> = ::prisma_client_rust::Create<'a, Types>;
+  pub type CreateMany<'a> = ::prisma_client_rust::CreateMany<'a, Types>;
+  pub type FindUnique<'a> = ::prisma_client_rust::FindUnique<'a, Types>;
+  pub type FindMany<'a> = ::prisma_client_rust::FindMany<'a, Types>;
+  pub type FindFirst<'a> = ::prisma_client_rust::FindFirst<'a, Types>;
+  pub type Update<'a> = ::prisma_client_rust::Update<'a, Types>;
+  pub type UpdateMany<'a> = ::prisma_client_rust::UpdateMany<'a, Types>;
+  pub type Upsert<'a> = ::prisma_client_rust::Upsert<'a, Types>;
+  pub type Delete<'a> = ::prisma_client_rust::Delete<'a, Types>;
+  pub type DeleteMany<'a> = ::prisma_client_rust::DeleteMany<'a, Types>;
+  #[derive(Clone)]
+  pub struct Actions<'a> {
+    pub client: &'a ::prisma_client_rust::PrismaClientInternals,
+  }
+  impl<'a> Actions<'a> {
+    pub fn find_unique(self, _where: UniqueWhereParam) -> FindUnique<'a> {
+      FindUnique::new(self.client, _where.into())
+    }
+    pub fn find_first(self, _where: Vec<WhereParam>) -> FindFirst<'a> {
+      FindFirst::new(self.client, _where)
+    }
+    pub fn find_many(self, _where: Vec<WhereParam>) -> FindMany<'a> {
+      FindMany::new(self.client, _where)
+    }
+    pub fn create(self, mut _params: Vec<SetParam>) -> Create<'a> {
+      _params.extend([]);
+      Create::new(self.client, _params)
+    }
+    pub fn create_unchecked(
+      self,
+      mut _params: Vec<UncheckedSetParam>,
+    ) -> Create<'a> {
+      _params.extend([]);
+      Create::new(self.client, _params.into_iter().map(Into::into).collect())
+    }
+    pub fn update(
+      self,
+      _where: UniqueWhereParam,
+      _params: Vec<SetParam>,
+    ) -> Update<'a> {
+      Update::new(self.client, _where.into(), _params, vec![])
+    }
+    pub fn update_unchecked(
+      self,
+      _where: UniqueWhereParam,
+      _params: Vec<UncheckedSetParam>,
+    ) -> Update<'a> {
+      Update::new(
+        self.client,
+        _where.into(),
+        _params.into_iter().map(Into::into).collect(),
+        vec![],
+      )
+    }
+    pub fn update_many(
+      self,
+      _where: Vec<WhereParam>,
+      _params: Vec<SetParam>,
+    ) -> UpdateMany<'a> {
+      UpdateMany::new(self.client, _where, _params)
+    }
+    pub fn upsert(
+      self,
+      _where: UniqueWhereParam,
+      (mut _params): (Vec<SetParam>),
+      _update: Vec<SetParam>,
+    ) -> Upsert<'a> {
+      _params.extend([]);
+      Upsert::new(self.client, _where.into(), _params, _update)
+    }
+    pub fn delete(self, _where: UniqueWhereParam) -> Delete<'a> {
+      Delete::new(self.client, _where.into(), vec![])
+    }
+    pub fn delete_many(self, _where: Vec<WhereParam>) -> DeleteMany<'a> {
+      DeleteMany::new(self.client, _where)
+    }
+    pub fn count(self, _where: Vec<WhereParam>) -> Count<'a> {
+      Count::new(self.client, _where)
+    }
+  }
+}
+pub mod git_config_entry {
+  use super::_prisma::*;
+  use super::*;
+  pub const NAME: &str = "gitConfigEntry";
+  pub mod id {
+    use super::super::*;
+    use super::_prisma::*;
+    use super::{
+      OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
+      WithParam,
+    };
+    pub const NAME: &str = "id";
+    pub struct Set(pub i32);
+    impl From<Set> for SetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::SetId(v)
+      }
+    }
+    impl From<Set> for UncheckedSetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::Id(v)
+      }
+    }
+    pub fn set<T: From<Set>>(value: i32) -> T {
+      Set(value).into()
+    }
+    pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+      OrderByParam::Id(direction)
+    }
+    pub fn equals<T: From<UniqueWhereParam>>(value: i32) -> T {
+      UniqueWhereParam::IdEquals(value).into()
+    }
+    ::prisma_client_rust::scalar_where_param_fns!(
+      _prisma::read_filters::IntFilter,
+      Id,
+      {
+        fn in_vec(_: Vec<i32>) -> InVec;
+        fn not_in_vec(_: Vec<i32>) -> NotInVec;
+        fn lt(_: i32) -> Lt;
+        fn lte(_: i32) -> Lte;
+        fn gt(_: i32) -> Gt;
+        fn gte(_: i32) -> Gte;
+        fn not(_: i32) -> Not;
+      }
+    );
+    pub fn increment(value: i32) -> SetParam {
+      SetParam::IncrementId(value)
+    }
+    pub fn decrement(value: i32) -> SetParam {
+      SetParam::DecrementId(value)
+    }
+    pub fn multiply(value: i32) -> SetParam {
+      SetParam::MultiplyId(value)
+    }
+    pub fn divide(value: i32) -> SetParam {
+      SetParam::DivideId(value)
+    }
+    pub struct Include;
+    impl Into<super::IncludeParam> for Include {
+      fn into(self) -> super::IncludeParam {
+        super::IncludeParam::Id(self)
+      }
+    }
+    impl Include {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+    pub struct Select;
+    impl Into<super::SelectParam> for Select {
+      fn into(self) -> super::SelectParam {
+        super::SelectParam::Id(self)
+      }
+    }
+    impl Select {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+  }
+  pub mod name {
+    use super::super::*;
+    use super::_prisma::*;
+    use super::{
+      OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
+      WithParam,
+    };
+    pub const NAME: &str = "name";
+    pub struct Set(pub String);
+    impl From<Set> for SetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::SetName(v)
+      }
+    }
+    impl From<Set> for UncheckedSetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::Name(v)
+      }
+    }
+    pub fn set<T: From<Set>>(value: String) -> T {
+      Set(value).into()
+    }
+    pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+      OrderByParam::Name(direction)
+    }
+    pub fn equals<T: From<UniqueWhereParam>>(value: String) -> T {
+      UniqueWhereParam::NameEquals(value).into()
+    }
+    ::prisma_client_rust::scalar_where_param_fns!(
+      _prisma::read_filters::StringFilter,
+      Name,
+      {
+        fn in_vec(_: Vec<String>) -> InVec;
+        fn not_in_vec(_: Vec<String>) -> NotInVec;
+        fn lt(_: String) -> Lt;
+        fn lte(_: String) -> Lte;
+        fn gt(_: String) -> Gt;
+        fn gte(_: String) -> Gte;
+        fn contains(_: String) -> Contains;
+        fn starts_with(_: String) -> StartsWith;
+        fn ends_with(_: String) -> EndsWith;
+        fn not(_: String) -> Not;
+      }
+    );
+    pub struct Include;
+    impl Into<super::IncludeParam> for Include {
+      fn into(self) -> super::IncludeParam {
+        super::IncludeParam::Name(self)
+      }
+    }
+    impl Include {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+    pub struct Select;
+    impl Into<super::SelectParam> for Select {
+      fn into(self) -> super::SelectParam {
+        super::SelectParam::Name(self)
+      }
+    }
+    impl Select {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+  }
+  pub mod value {
+    use super::super::*;
+    use super::_prisma::*;
+    use super::{
+      OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
+      WithParam,
+    };
+    pub const NAME: &str = "value";
+    pub struct Set(pub String);
+    impl From<Set> for SetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::SetValue(v)
+      }
+    }
+    impl From<Set> for UncheckedSetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::Value(v)
+      }
+    }
+    pub fn set<T: From<Set>>(value: String) -> T {
+      Set(value).into()
+    }
+    pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+      OrderByParam::Value(direction)
+    }
+    pub fn equals(value: String) -> WhereParam {
+      WhereParam::Value(_prisma::read_filters::StringFilter::Equals(value))
+    }
+    ::prisma_client_rust::scalar_where_param_fns!(
+      _prisma::read_filters::StringFilter,
+      Value,
+      {
+        fn in_vec(_: Vec<String>) -> InVec;
+        fn not_in_vec(_: Vec<String>) -> NotInVec;
+        fn lt(_: String) -> Lt;
+        fn lte(_: String) -> Lte;
+        fn gt(_: String) -> Gt;
+        fn gte(_: String) -> Gte;
+        fn contains(_: String) -> Contains;
+        fn starts_with(_: String) -> StartsWith;
+        fn ends_with(_: String) -> EndsWith;
+        fn not(_: String) -> Not;
+      }
+    );
+    pub struct Include;
+    impl Into<super::IncludeParam> for Include {
+      fn into(self) -> super::IncludeParam {
+        super::IncludeParam::Value(self)
+      }
+    }
+    impl Include {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+    pub struct Select;
+    impl Into<super::SelectParam> for Select {
+      fn into(self) -> super::SelectParam {
+        super::SelectParam::Value(self)
+      }
+    }
+    impl Select {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+  }
+  pub mod git_config {
+    use super::super::*;
+    use super::_prisma::*;
+    use super::{
+      OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
+      WithParam,
+    };
+    pub const NAME: &str = "gitConfig";
+    pub struct Fetch(pub git_config::UniqueArgs);
+    impl Fetch {
+      pub fn with(mut self, params: impl Into<git_config::WithParam>) -> Self {
+        self.0 = self.0.with(params.into());
+        self
+      }
+    }
+    impl From<Fetch> for WithParam {
+      fn from(Fetch(v): Fetch) -> Self {
+        WithParam::GitConfig(v)
+      }
+    }
+    pub fn fetch() -> Fetch {
+      Fetch(git_config::UniqueArgs::new())
+    }
+    pub struct Connect(git_config::UniqueWhereParam);
+    impl From<Connect> for SetParam {
+      fn from(Connect(v): Connect) -> Self {
+        Self::ConnectGitConfig(v)
+      }
+    }
+    pub fn connect<T: From<Connect>>(value: git_config::UniqueWhereParam) -> T {
+      Connect(value).into()
+    }
+    pub fn is(value: Vec<git_config::WhereParam>) -> WhereParam {
+      WhereParam::GitConfigIs(value)
+    }
+    pub fn is_not(value: Vec<git_config::WhereParam>) -> WhereParam {
+      WhereParam::GitConfigIsNot(value)
+    }
+    pub enum Include {
+      Select(Vec<git_config::SelectParam>),
+      Include(Vec<git_config::IncludeParam>),
+      Fetch,
+    }
+    impl Into<super::IncludeParam> for Include {
+      fn into(self) -> super::IncludeParam {
+        super::IncludeParam::GitConfig(self)
+      }
+    }
+    impl Include {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        let selections = match self { Self :: Select (selections) => { selections . into_iter () . map (| s | s . to_selection ()) . collect () } , Self :: Include (selections) => { let mut nested_selections = < git_config :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections () ; nested_selections . extend (selections . into_iter () . map (| s | s . to_selection ())) ; nested_selections } , Self :: Fetch => { < git_config :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections () } } ;
+        ::prisma_client_rust::Selection::new("gitConfig", None, [], selections)
+      }
+      pub fn select(nested_selections: Vec<git_config::SelectParam>) -> Self {
+        Self::Select(nested_selections)
+      }
+      pub fn include(nested_selections: Vec<git_config::IncludeParam>) -> Self {
+        Self::Include(nested_selections)
+      }
+    }
+    pub enum Select {
+      Select(Vec<git_config::SelectParam>),
+      Include(Vec<git_config::IncludeParam>),
+      Fetch,
+    }
+    impl Into<super::SelectParam> for Select {
+      fn into(self) -> super::SelectParam {
+        super::SelectParam::GitConfig(self)
+      }
+    }
+    impl Select {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        let selections = match self { Self :: Select (selections) => { selections . into_iter () . map (| s | s . to_selection ()) . collect () } , Self :: Include (selections) => { let mut nested_selections = vec ! [] ; nested_selections . extend (selections . into_iter () . map (| s | s . to_selection ())) ; nested_selections } , Self :: Fetch => { < git_config :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections () } } ;
+        ::prisma_client_rust::Selection::new("gitConfig", None, [], selections)
+      }
+      pub fn select(nested_selections: Vec<git_config::SelectParam>) -> Self {
+        Self::Select(nested_selections)
+      }
+      pub fn include(nested_selections: Vec<git_config::IncludeParam>) -> Self {
+        Self::Include(nested_selections)
+      }
+    }
+  }
+  pub mod git_config_id {
+    use super::super::*;
+    use super::_prisma::*;
+    use super::{
+      OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam,
+      WithParam,
+    };
+    pub const NAME: &str = "gitConfigId";
+    pub struct Set(pub i32);
+    impl From<Set> for SetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::SetGitConfigId(v)
+      }
+    }
+    impl From<Set> for UncheckedSetParam {
+      fn from(Set(v): Set) -> Self {
+        Self::GitConfigId(v)
+      }
+    }
+    pub fn set<T: From<Set>>(value: i32) -> T {
+      Set(value).into()
+    }
+    pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+      OrderByParam::GitConfigId(direction)
+    }
+    pub fn equals(value: i32) -> WhereParam {
+      WhereParam::GitConfigId(_prisma::read_filters::IntFilter::Equals(value))
+    }
+    ::prisma_client_rust::scalar_where_param_fns!(
+      _prisma::read_filters::IntFilter,
+      GitConfigId,
+      {
+        fn in_vec(_: Vec<i32>) -> InVec;
+        fn not_in_vec(_: Vec<i32>) -> NotInVec;
+        fn lt(_: i32) -> Lt;
+        fn lte(_: i32) -> Lte;
+        fn gt(_: i32) -> Gt;
+        fn gte(_: i32) -> Gte;
+        fn not(_: i32) -> Not;
+      }
+    );
+    pub fn increment(value: i32) -> SetParam {
+      SetParam::IncrementGitConfigId(value)
+    }
+    pub fn decrement(value: i32) -> SetParam {
+      SetParam::DecrementGitConfigId(value)
+    }
+    pub fn multiply(value: i32) -> SetParam {
+      SetParam::MultiplyGitConfigId(value)
+    }
+    pub fn divide(value: i32) -> SetParam {
+      SetParam::DivideGitConfigId(value)
+    }
+    pub struct Include;
+    impl Into<super::IncludeParam> for Include {
+      fn into(self) -> super::IncludeParam {
+        super::IncludeParam::GitConfigId(self)
+      }
+    }
+    impl Include {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+    pub struct Select;
+    impl Into<super::SelectParam> for Select {
+      fn into(self) -> super::SelectParam {
+        super::SelectParam::GitConfigId(self)
+      }
+    }
+    impl Select {
+      pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+        ::prisma_client_rust::sel(NAME)
+      }
+    }
+  }
+  pub fn create(
+    name: String,
+    value: String,
+    git_config: super::git_config::UniqueWhereParam,
+    _params: Vec<SetParam>,
+  ) -> (
+    String,
+    String,
+    super::git_config::UniqueWhereParam,
+    Vec<SetParam>,
+  ) {
+    (name, value, git_config, _params)
+  }
+  pub fn create_unchecked(
+    name: String,
+    value: String,
+    git_config_id: i32,
+    _params: Vec<SetParam>,
+  ) -> (String, String, i32, Vec<SetParam>) {
+    (name, value, git_config_id, _params)
+  }
+  #[macro_export]
+  macro_rules ! _select_git_config_entry { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: git_config_entry :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: git_config_entry :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: git_config_entry :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: git_config_entry :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: prisma :: git_config_entry :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: git_config_entry :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , name , value , git_config , git_config_id } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { $ (pub $ field : crate :: prisma :: git_config_entry :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: git_config_entry :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: git_config_entry :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: git_config_entry :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config_entry :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config_entry :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "name" , "value" , "gitConfig" , "gitConfigId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: git_config_entry :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { i32 } ; (@ field_type ; name) => { String } ; (@ field_type ; value) => { String } ; (@ field_type ; git_config : $ selection_mode : ident { $ ($ selections : tt) + }) => { git_config :: Data } ; (@ field_type ; git_config) => { crate :: prisma :: git_config :: Data } ; (@ field_type ; git_config_id) => { i32 } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "GitConfigEntry" , available relations are "id, name, value, git_config, git_config_id")) } ; (@ field_module ; git_config : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: git_config :: select ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: prisma :: git_config_entry :: SelectParam > :: into (crate :: prisma :: git_config_entry :: id :: Select) } ; (@ selection_field_to_selection_param ; name) => { Into :: < crate :: prisma :: git_config_entry :: SelectParam > :: into (crate :: prisma :: git_config_entry :: name :: Select) } ; (@ selection_field_to_selection_param ; value) => { Into :: < crate :: prisma :: git_config_entry :: SelectParam > :: into (crate :: prisma :: git_config_entry :: value :: Select) } ; (@ selection_field_to_selection_param ; git_config $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: git_config_entry :: SelectParam > :: into (crate :: prisma :: git_config_entry :: git_config :: Select :: $ selection_mode (crate :: prisma :: git_config :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; git_config $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: git_config_entry :: SelectParam > :: into (crate :: prisma :: git_config_entry :: git_config :: Select :: Fetch) } } ; (@ selection_field_to_selection_param ; git_config_id) => { Into :: < crate :: prisma :: git_config_entry :: SelectParam > :: into (crate :: prisma :: git_config_entry :: git_config_id :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: git_config_entry :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; name) => { "name" } ; (@ field_serde_name ; value) => { "value" } ; (@ field_serde_name ; git_config) => { "gitConfig" } ; (@ field_serde_name ; git_config_id) => { "gitConfigId" } ; }
+  pub use _select_git_config_entry as select;
+  pub enum SelectParam {
+    Id(id::Select),
+    Name(name::Select),
+    Value(value::Select),
+    GitConfig(git_config::Select),
+    GitConfigId(git_config_id::Select),
+  }
+  impl SelectParam {
+    pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+      match self {
+        Self::Id(data) => data.to_selection(),
+        Self::Name(data) => data.to_selection(),
+        Self::Value(data) => data.to_selection(),
+        Self::GitConfig(data) => data.to_selection(),
+        Self::GitConfigId(data) => data.to_selection(),
+      }
+    }
+  }
+  #[macro_export]
+  macro_rules ! _include_git_config_entry { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: prisma :: git_config_entry :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: git_config_entry :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: prisma :: git_config_entry :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: git_config_entry :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: prisma :: git_config_entry :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: prisma :: git_config_entry :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: prisma :: git_config_entry :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: prisma :: git_config_entry :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { git_config } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] pub struct Data { pub id : i32 , pub name : String , pub value : String , pub git_config_id : i32 , $ (pub $ field : crate :: prisma :: git_config_entry :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (name) , stringify ! (value) , stringify ! (git_config_id)] . len ()) ? ; $ (state . serialize_field (crate :: prisma :: git_config_entry :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: prisma :: git_config_entry :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: prisma :: git_config_entry :: name :: NAME , & self . name) ? ; state . serialize_field (crate :: prisma :: git_config_entry :: value :: NAME , & self . value) ? ; state . serialize_field (crate :: prisma :: git_config_entry :: git_config_id :: NAME , & self . git_config_id) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , name , value , git_config_id } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: prisma :: git_config_entry :: $ field :: NAME) , + , crate :: prisma :: git_config_entry :: id :: NAME , crate :: prisma :: git_config_entry :: name :: NAME , crate :: prisma :: git_config_entry :: value :: NAME , crate :: prisma :: git_config_entry :: git_config_id :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: prisma :: git_config_entry :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: prisma :: git_config_entry :: id :: NAME => Ok (Field :: id) , crate :: prisma :: git_config_entry :: name :: NAME => Ok (Field :: name) , crate :: prisma :: git_config_entry :: value :: NAME => Ok (Field :: value) , crate :: prisma :: git_config_entry :: git_config_id :: NAME => Ok (Field :: git_config_id) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut name = None ; let mut value = None ; let mut git_config_id = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config_entry :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: name => { if name . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config_entry :: name :: NAME)) ; } name = Some (map . next_value () ?) ; } Field :: value => { if value . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config_entry :: value :: NAME)) ; } value = Some (map . next_value () ?) ; } Field :: git_config_id => { if git_config_id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config_entry :: git_config_id :: NAME)) ; } git_config_id = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: prisma :: git_config_entry :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config_entry :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config_entry :: id :: NAME)) ? ; let name = name . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config_entry :: name :: NAME)) ? ; let value = value . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config_entry :: value :: NAME)) ? ; let git_config_id = git_config_id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: prisma :: git_config_entry :: git_config_id :: NAME)) ? ; Ok (Data { id , name , value , git_config_id , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "name" , "value" , "gitConfig" , "gitConfigId"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: prisma :: git_config_entry :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; git_config : $ selection_mode : ident { $ ($ selections : tt) + }) => { git_config :: Data } ; (@ field_type ; git_config) => { crate :: prisma :: git_config :: Data } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "GitConfigEntry" , available relations are "git_config")) } ; (@ field_module ; git_config : $ selection_mode : ident { $ ($ selections : tt) + }) => { crate :: prisma :: git_config :: include ! (@ definitions ; ; $ ($ selections) +) ; } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; git_config $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? : $ selection_mode : ident { $ ($ selections : tt) + }) => { { Into :: < crate :: prisma :: git_config_entry :: IncludeParam > :: into (crate :: prisma :: git_config_entry :: git_config :: Include :: $ selection_mode (crate :: prisma :: git_config :: select ! (@ selections_to_params ; : $ selection_mode { $ ($ selections) + }) . into_iter () . collect ())) } } ; (@ selection_field_to_selection_param ; git_config $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ?) => { { Into :: < crate :: prisma :: git_config_entry :: IncludeParam > :: into (crate :: prisma :: git_config_entry :: git_config :: Include :: Fetch) } } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: prisma :: git_config_entry :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; name) => { "name" } ; (@ field_serde_name ; value) => { "value" } ; (@ field_serde_name ; git_config) => { "gitConfig" } ; (@ field_serde_name ; git_config_id) => { "gitConfigId" } ; }
+  pub use _include_git_config_entry as include;
+  pub enum IncludeParam {
+    Id(id::Include),
+    Name(name::Include),
+    Value(value::Include),
+    GitConfig(git_config::Include),
+    GitConfigId(git_config_id::Include),
+  }
+  impl IncludeParam {
+    pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+      match self {
+        Self::Id(data) => data.to_selection(),
+        Self::Name(data) => data.to_selection(),
+        Self::Value(data) => data.to_selection(),
+        Self::GitConfig(data) => data.to_selection(),
+        Self::GitConfigId(data) => data.to_selection(),
+      }
+    }
+  }
+  #[macro_export]
+  macro_rules ! _partial_unchecked_git_config_entry { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: prisma :: git_config_entry struct $ struct_name { # [serde (rename = "id")] pub id : i32 , # [serde (rename = "name")] pub name : String , # [serde (rename = "value")] pub value : String , # [serde (rename = "gitConfigId")] pub git_config_id : i32 } [$ ($ scalar_field) , +] } } ; }
+  pub use _partial_unchecked_git_config_entry as partial_unchecked;
+  #[derive(Debug, Clone, :: serde :: Serialize, :: serde :: Deserialize)]
+  pub struct Data {
+    #[serde(rename = "id")]
+    pub id: i32,
+    #[serde(rename = "name")]
+    pub name: String,
+    #[serde(rename = "value")]
+    pub value: String,
+    #[serde(rename = "gitConfig")]
+    pub git_config: Option<Box<super::git_config::Data>>,
+    #[serde(rename = "gitConfigId")]
+    pub git_config_id: i32,
+  }
+  impl Data {
+    pub fn git_config(
+      &self,
+    ) -> Result<
+      &super::git_config::Data,
+      ::prisma_client_rust::RelationNotFetchedError,
+    > {
+      self
+        .git_config
+        .as_ref()
+        .ok_or(::prisma_client_rust::RelationNotFetchedError::new(
+          stringify!(git_config),
+        ))
+        .map(|v| v.as_ref())
+    }
+  }
+  #[derive(Clone)]
+  pub enum WithParam {
+    GitConfig(super::git_config::UniqueArgs),
+  }
+  impl Into<::prisma_client_rust::Selection> for WithParam {
+    fn into(self) -> ::prisma_client_rust::Selection {
+      match self {
+        Self::GitConfig(args) => {
+          let mut selections = < super :: git_config :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections () ;
+          selections.extend(
+            args
+              .with_params
+              .into_iter()
+              .map(Into::<::prisma_client_rust::Selection>::into),
+          );
+          ::prisma_client_rust::Selection::new(
+            git_config::NAME,
+            None,
+            [],
+            selections,
+          )
+        }
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub enum SetParam {
+    SetId(i32),
+    IncrementId(i32),
+    DecrementId(i32),
+    MultiplyId(i32),
+    DivideId(i32),
+    SetName(String),
+    SetValue(String),
+    ConnectGitConfig(super::git_config::UniqueWhereParam),
+    SetGitConfigId(i32),
+    IncrementGitConfigId(i32),
+    DecrementGitConfigId(i32),
+    MultiplyGitConfigId(i32),
+    DivideGitConfigId(i32),
+  }
+  impl From<SetParam> for (String, ::prisma_client_rust::PrismaValue) {
+    fn from(param: SetParam) -> Self {
+      match param {
+        SetParam::SetId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Int(value as i64),
+        ),
+        SetParam::IncrementId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "increment".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::DecrementId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "decrement".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::MultiplyId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "multiply".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::DivideId(value) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "divide".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::SetName(value) => (
+          name::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::String(value),
+        ),
+        SetParam::SetValue(value) => (
+          value::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::String(value),
+        ),
+        SetParam::ConnectGitConfig(where_param) => (
+          git_config::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "connect".to_string(),
+            ::prisma_client_rust::PrismaValue::Object(
+              [where_param]
+                .into_iter()
+                .map(Into::<super::git_config::WhereParam>::into)
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .collect(),
+            ),
+          )]),
+        ),
+        SetParam::SetGitConfigId(value) => (
+          git_config_id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Int(value as i64),
+        ),
+        SetParam::IncrementGitConfigId(value) => (
+          git_config_id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "increment".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::DecrementGitConfigId(value) => (
+          git_config_id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "decrement".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::MultiplyGitConfigId(value) => (
+          git_config_id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "multiply".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+        SetParam::DivideGitConfigId(value) => (
+          git_config_id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::Object(vec![(
+            "divide".to_string(),
+            ::prisma_client_rust::PrismaValue::Int(value as i64),
+          )]),
+        ),
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub enum UncheckedSetParam {
+    Id(i32),
+    Name(String),
+    Value(String),
+    GitConfigId(i32),
+  }
+  impl From<UncheckedSetParam> for SetParam {
+    fn from(param: UncheckedSetParam) -> Self {
+      match param {
+        UncheckedSetParam::Id(value) => Self::SetId(value),
+        UncheckedSetParam::Name(value) => Self::SetName(value),
+        UncheckedSetParam::Value(value) => Self::SetValue(value),
+        UncheckedSetParam::GitConfigId(value) => Self::SetGitConfigId(value),
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub enum OrderByParam {
+    Id(::prisma_client_rust::Direction),
+    Name(::prisma_client_rust::Direction),
+    Value(::prisma_client_rust::Direction),
+    GitConfigId(::prisma_client_rust::Direction),
+  }
+  impl Into<(String, ::prisma_client_rust::PrismaValue)> for OrderByParam {
+    fn into(self) -> (String, ::prisma_client_rust::PrismaValue) {
+      match self {
+        Self::Id(direction) => (
+          id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+        ),
+        Self::Name(direction) => (
+          name::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+        ),
+        Self::Value(direction) => (
+          value::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+        ),
+        Self::GitConfigId(direction) => (
+          git_config_id::NAME.to_string(),
+          ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+        ),
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub enum WhereParam {
+    Not(Vec<WhereParam>),
+    Or(Vec<WhereParam>),
+    And(Vec<WhereParam>),
+    Id(_prisma::read_filters::IntFilter),
+    Name(_prisma::read_filters::StringFilter),
+    Value(_prisma::read_filters::StringFilter),
+    GitConfigIs(Vec<super::git_config::WhereParam>),
+    GitConfigIsNot(Vec<super::git_config::WhereParam>),
+    GitConfigId(_prisma::read_filters::IntFilter),
+  }
+  impl ::prisma_client_rust::WhereInput for WhereParam {
+    fn serialize(self) -> ::prisma_client_rust::SerializedWhereInput {
+      let (name, value) = match self {
+        Self::Not(value) => (
+          "NOT",
+          ::prisma_client_rust::SerializedWhereValue::Object(
+            ::prisma_client_rust::merge_fields(
+              value
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(Into::into)
+                .collect(),
+            ),
+          ),
+        ),
+        Self::Or(value) => (
+          "OR",
+          ::prisma_client_rust::SerializedWhereValue::List(
+            value
+              .into_iter()
+              .map(::prisma_client_rust::WhereInput::serialize)
+              .map(Into::into)
+              .map(|v| vec![v])
+              .map(::prisma_client_rust::PrismaValue::Object)
+              .collect(),
+          ),
+        ),
+        Self::And(value) => (
+          "AND",
+          ::prisma_client_rust::SerializedWhereValue::Object(
+            ::prisma_client_rust::merge_fields(
+              value
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(Into::into)
+                .collect(),
+            ),
+          ),
+        ),
+        Self::Id(value) => (id::NAME, value.into()),
+        Self::Name(value) => (name::NAME, value.into()),
+        Self::Value(value) => (value::NAME, value.into()),
+        Self::GitConfigIs(where_params) => (
+          git_config::NAME,
+          ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+            "is".to_string(),
+            ::prisma_client_rust::PrismaValue::Object(
+              where_params
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .collect(),
+            ),
+          )]),
+        ),
+        Self::GitConfigIsNot(where_params) => (
+          git_config::NAME,
+          ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+            "isNot".to_string(),
+            ::prisma_client_rust::PrismaValue::Object(
+              where_params
+                .into_iter()
+                .map(::prisma_client_rust::WhereInput::serialize)
+                .map(
+                  ::prisma_client_rust::SerializedWhereInput::transform_equals,
+                )
+                .collect(),
+            ),
+          )]),
+        ),
+        Self::GitConfigId(value) => (git_config_id::NAME, value.into()),
+      };
+      ::prisma_client_rust::SerializedWhereInput::new(name, value.into())
+    }
+  }
+  #[derive(Clone)]
+  pub enum UniqueWhereParam {
+    NameEquals(String),
+    IdEquals(i32),
+  }
+  impl From<UniqueWhereParam> for WhereParam {
+    fn from(value: UniqueWhereParam) -> Self {
+      match value {
+        UniqueWhereParam::NameEquals(value) => {
+          Self::Name(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        UniqueWhereParam::IdEquals(value) => {
+          Self::Id(_prisma::read_filters::IntFilter::Equals(value))
+        }
+      }
+    }
+  }
+  impl From<::prisma_client_rust::Operator<Self>> for WhereParam {
+    fn from(op: ::prisma_client_rust::Operator<Self>) -> Self {
+      match op {
+        ::prisma_client_rust::Operator::Not(value) => Self::Not(value),
+        ::prisma_client_rust::Operator::And(value) => Self::And(value),
+        ::prisma_client_rust::Operator::Or(value) => Self::Or(value),
+      }
+    }
+  }
+  #[derive(Clone)]
+  pub struct Types;
+  impl ::prisma_client_rust::ModelTypes for Types {
+    type Data = Data;
+    type Where = WhereParam;
+    type UncheckedSet = UncheckedSetParam;
+    type Set = SetParam;
+    type With = WithParam;
+    type OrderBy = OrderByParam;
+    type Cursor = UniqueWhereParam;
+    const MODEL: &'static str = NAME;
+    fn scalar_selections() -> Vec<::prisma_client_rust::Selection> {
+      vec![
+        ::prisma_client_rust::sel(id::NAME),
+        ::prisma_client_rust::sel(name::NAME),
+        ::prisma_client_rust::sel(value::NAME),
+        ::prisma_client_rust::sel(git_config_id::NAME),
+      ]
+    }
+  }
+  pub type UniqueArgs = ::prisma_client_rust::UniqueArgs<Types>;
+  pub type ManyArgs = ::prisma_client_rust::ManyArgs<Types>;
+  pub type Count<'a> = ::prisma_client_rust::Count<'a, Types>;
+  pub type Create<'a> = ::prisma_client_rust::Create<'a, Types>;
+  pub type CreateMany<'a> = ::prisma_client_rust::CreateMany<'a, Types>;
+  pub type FindUnique<'a> = ::prisma_client_rust::FindUnique<'a, Types>;
+  pub type FindMany<'a> = ::prisma_client_rust::FindMany<'a, Types>;
+  pub type FindFirst<'a> = ::prisma_client_rust::FindFirst<'a, Types>;
+  pub type Update<'a> = ::prisma_client_rust::Update<'a, Types>;
+  pub type UpdateMany<'a> = ::prisma_client_rust::UpdateMany<'a, Types>;
+  pub type Upsert<'a> = ::prisma_client_rust::Upsert<'a, Types>;
+  pub type Delete<'a> = ::prisma_client_rust::Delete<'a, Types>;
+  pub type DeleteMany<'a> = ::prisma_client_rust::DeleteMany<'a, Types>;
+  #[derive(Clone)]
+  pub struct Actions<'a> {
+    pub client: &'a ::prisma_client_rust::PrismaClientInternals,
+  }
+  impl<'a> Actions<'a> {
+    pub fn find_unique(self, _where: UniqueWhereParam) -> FindUnique<'a> {
+      FindUnique::new(self.client, _where.into())
+    }
+    pub fn find_first(self, _where: Vec<WhereParam>) -> FindFirst<'a> {
+      FindFirst::new(self.client, _where)
+    }
+    pub fn find_many(self, _where: Vec<WhereParam>) -> FindMany<'a> {
+      FindMany::new(self.client, _where)
+    }
+    pub fn create(
+      self,
+      name: String,
+      value: String,
+      git_config: super::git_config::UniqueWhereParam,
+      mut _params: Vec<SetParam>,
+    ) -> Create<'a> {
+      _params.extend([
+        name::set(name),
+        value::set(value),
+        git_config::connect(git_config),
+      ]);
+      Create::new(self.client, _params)
+    }
+    pub fn create_unchecked(
+      self,
+      name: String,
+      value: String,
+      git_config_id: i32,
+      mut _params: Vec<UncheckedSetParam>,
+    ) -> Create<'a> {
+      _params.extend([
+        name::set(name),
+        value::set(value),
+        git_config_id::set(git_config_id),
+      ]);
+      Create::new(self.client, _params.into_iter().map(Into::into).collect())
+    }
+    pub fn update(
+      self,
+      _where: UniqueWhereParam,
+      _params: Vec<SetParam>,
+    ) -> Update<'a> {
+      Update::new(self.client, _where.into(), _params, vec![])
+    }
+    pub fn update_unchecked(
+      self,
+      _where: UniqueWhereParam,
+      _params: Vec<UncheckedSetParam>,
+    ) -> Update<'a> {
+      Update::new(
+        self.client,
+        _where.into(),
+        _params.into_iter().map(Into::into).collect(),
+        vec![],
+      )
+    }
+    pub fn update_many(
+      self,
+      _where: Vec<WhereParam>,
+      _params: Vec<SetParam>,
+    ) -> UpdateMany<'a> {
+      UpdateMany::new(self.client, _where, _params)
+    }
+    pub fn upsert(
+      self,
+      _where: UniqueWhereParam,
+      (name, value, git_config, mut _params): (
+        String,
+        String,
+        super::git_config::UniqueWhereParam,
+        Vec<SetParam>,
+      ),
+      _update: Vec<SetParam>,
+    ) -> Upsert<'a> {
+      _params.extend([
+        name::set(name),
+        value::set(value),
+        git_config::connect(git_config),
+      ]);
+      Upsert::new(self.client, _where.into(), _params, _update)
+    }
+    pub fn delete(self, _where: UniqueWhereParam) -> Delete<'a> {
+      Delete::new(self.client, _where.into(), vec![])
+    }
+    pub fn delete_many(self, _where: Vec<WhereParam>) -> DeleteMany<'a> {
+      DeleteMany::new(self.client, _where)
+    }
+    pub fn count(self, _where: Vec<WhereParam>) -> Count<'a> {
+      Count::new(self.client, _where)
+    }
+  }
+}
 pub mod _prisma {
   pub struct PrismaClientBuilder {
     url: Option<String>,
@@ -3399,6 +4938,12 @@ pub mod _prisma {
     pub fn branch(&self) -> super::branch::Actions {
       super::branch::Actions { client: &self.0 }
     }
+    pub fn git_config(&self) -> super::git_config::Actions {
+      super::git_config::Actions { client: &self.0 }
+    }
+    pub fn git_config_entry(&self) -> super::git_config_entry::Actions {
+      super::git_config_entry::Actions { client: &self.0 }
+    }
   }
   impl ::prisma_client_rust::PrismaClient for PrismaClient {
     fn internals(&self) -> &::prisma_client_rust::PrismaClientInternals {
@@ -3448,6 +4993,55 @@ pub mod _prisma {
         Self::IsHead => "is_head".to_string(),
         Self::Upstream => "upstream".to_string(),
         Self::RepoDir => "repoDir".to_string(),
+      }
+    }
+  }
+  #[derive(
+    Debug,
+    Clone,
+    Copy,
+    :: serde :: Serialize,
+    :: serde :: Deserialize,
+    PartialEq,
+    Eq,
+  )]
+  pub enum GitConfigEntryScalarFieldEnum {
+    #[serde(rename = "id")]
+    Id,
+    #[serde(rename = "name")]
+    Name,
+    #[serde(rename = "value")]
+    Value,
+    #[serde(rename = "gitConfigId")]
+    GitConfigId,
+  }
+  impl ToString for GitConfigEntryScalarFieldEnum {
+    fn to_string(&self) -> String {
+      match self {
+        Self::Id => "id".to_string(),
+        Self::Name => "name".to_string(),
+        Self::Value => "value".to_string(),
+        Self::GitConfigId => "gitConfigId".to_string(),
+      }
+    }
+  }
+  #[derive(
+    Debug,
+    Clone,
+    Copy,
+    :: serde :: Serialize,
+    :: serde :: Deserialize,
+    PartialEq,
+    Eq,
+  )]
+  pub enum GitConfigScalarFieldEnum {
+    #[serde(rename = "id")]
+    Id,
+  }
+  impl ToString for GitConfigScalarFieldEnum {
+    fn to_string(&self) -> String {
+      match self {
+        Self::Id => "id".to_string(),
       }
     }
   }

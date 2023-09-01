@@ -15,7 +15,8 @@ async fn main() -> std::io::Result<()> {
       .supports_credentials();
     App::new()
       .wrap(cors_config)
-      .service(scope("repos").service(services::repos::repos()))
+      .service(services::repos::repos())
+      .service(services::config::config())
       .service(scope("").service(resource("/").to(|| HttpResponse::Ok())))
   })
   .bind(("127.0.0.1", 8080))?
