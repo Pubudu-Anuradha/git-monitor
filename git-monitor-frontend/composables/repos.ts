@@ -1,5 +1,3 @@
-import api from './api'
-
 const getAllRepos = async () => {
   const response = await api.get<{ Ok: Repository[] }>('/repos/all')
   return response.data
