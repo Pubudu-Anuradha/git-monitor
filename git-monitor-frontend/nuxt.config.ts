@@ -10,6 +10,10 @@ export default defineNuxtConfig({
   css: ['vuetify/lib/styles/main.sass'],
 
   devtools: { enabled: true },
+  imports: {
+    dirs: ['composables/**'],
+  },
+
   modules: ['@nuxtjs/color-mode', '@nuxtjs/tailwindcss'],
 
   typescript: {
