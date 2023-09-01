@@ -16,9 +16,7 @@ defineProps<{
       <h1 class="font-bold text-xl italic">
         {{ repo.name }} : {{ repo.state }}
       </h1>
-      <button @click="updater(repo, !repo.managed)">
-        toggle monitoring with git-monitor
-      </button>
+      <v-btn @click="updater(repo, !repo.managed)">toggle monitoring</v-btn>
     </div>
     <div>
       <div>branches: {{ repo.branches.length }}</div>
@@ -85,19 +83,11 @@ defineProps<{
         </span>
       </li>
     </ul>
-    <button @click="updater(repo, null)">Update</button>
+    <v-btn @click="updater(repo, null)">Update</v-btn>
   </div>
 </template>
 
 <style scoped>
-button {
-  border: 1px solid black;
-  border-radius: 0.25rem;
-  padding: 0.25rem;
-  background-color: white;
-  color: black;
-  cursor: pointer;
-}
 h2 {
   margin-top: 1rem;
   font-size: large;

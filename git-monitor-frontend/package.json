@@ -23,6 +23,8 @@
     "eslint-plugin-perfectionist": "^1.5.1",
     "eslint-plugin-prettier": "^5.0.0",
     "nuxt": "^3.6.5",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "sass": "^1.66.1",
+    "vuetify": "3.4.0-alpha.1"
   }
 }
