@@ -1,24 +1,24 @@
-use git2::{RepositoryState, StatusEntry};
-
-pub fn state_to_string(state: RepositoryState) -> String {
+pub fn repository_state_to_string(state: git2::RepositoryState) -> String {
   match state {
-    RepositoryState::Clean => "Clean",
-    RepositoryState::Merge => "Merge",
-    RepositoryState::Revert => "Revert",
-    RepositoryState::RevertSequence => "RevertSequence",
-    RepositoryState::CherryPick => "CherryPick",
-    RepositoryState::CherryPickSequence => "CheeryPickSequence",
-    RepositoryState::Bisect => "Bisect",
-    RepositoryState::Rebase => "Rebase",
-    RepositoryState::RebaseInteractive => "RebaseInteractive",
-    RepositoryState::RebaseMerge => "RebaseMerge",
-    RepositoryState::ApplyMailbox => "ApplyMailbox",
-    RepositoryState::ApplyMailboxOrRebase => "ApplyMailboxOrRebase",
+    git2::RepositoryState::Clean => "Clean",
+    git2::RepositoryState::Merge => "Merge",
+    git2::RepositoryState::Revert => "Revert",
+    git2::RepositoryState::RevertSequence => "RevertSequence",
+    git2::RepositoryState::CherryPick => "CherryPick",
+    git2::RepositoryState::CherryPickSequence => "CheeryPickSequence",
+    git2::RepositoryState::Bisect => "Bisect",
+    git2::RepositoryState::Rebase => "Rebase",
+    git2::RepositoryState::RebaseInteractive => "RebaseInteractive",
+    git2::RepositoryState::RebaseMerge => "RebaseMerge",
+    git2::RepositoryState::ApplyMailbox => "ApplyMailbox",
+    git2::RepositoryState::ApplyMailboxOrRebase => "ApplyMailboxOrRebase",
   }
   .to_string()
 }
 
-pub fn status(entry: StatusEntry<'_>) -> (String, String) {
+pub fn status_entry_to_string_pair(
+  entry: git2::StatusEntry<'_>,
+) -> (String, String) {
   let status = match entry.status() {
     git2::Status::CURRENT => "CURRENT",
     git2::Status::INDEX_NEW => "INDEX_NEW",
