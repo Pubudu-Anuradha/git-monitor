@@ -1,3 +1,5 @@
+use crate::services::user::get_home_dir;
+
 pub fn repository_state_to_string(state: git2::RepositoryState) -> String {
   match state {
     git2::RepositoryState::Clean => "Clean",
@@ -43,4 +45,20 @@ pub fn status_entry_to_string_pair(
   }
   .to_string();
   (status.clone(), path.clone())
+}
+
+pub fn absolute_path(path: &String, absolute: bool) -> String {
+  let _path = path.as_str().trim_end_matches(" ").trim_end_matches("/");
+  let abs_path = match absolute {
+    true => _path.to_string(),
+    false => format!(
+      "{}/{}",
+      get_home_dir(),
+      _path
+        .trim_start_matches(" ")
+        .trim_start_matches("~")
+        .trim_start_matches("/")
+    ),
+  };
+  abs_path
 }
