@@ -19,7 +19,7 @@ async fn main() -> std::io::Result<()> {
     App::new()
       .wrap(Logger::default())
       .wrap(cors_config)
-      .service(services::config::config())
+      .service(services::config::config_scope())
       .service(services::repos::repo_scope())
       .service(scope("").service(resource("/").to(|| HttpResponse::Ok())))
   })

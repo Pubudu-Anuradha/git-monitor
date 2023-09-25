@@ -1,15 +1,15 @@
-use actix_web::web::{self, Json};
+mod util;
 
 use crate::{get_prisma_connection, prisma};
+use actix_web::web::{self, Json};
 
-pub fn config() -> actix_web::Scope {
+pub fn config_scope() -> actix_web::Scope {
   web::scope("config")
-      .route("get",web::get().to(get_config))
-      .route("update",web::put().to(update_config))
+    .route("", web::get().to(get_config))
+    .route("", web::put().to(update_config))
 }
 
-async fn update_config() -> Json<Option<prisma::git_config::Data>>
-{
+async fn update_config() -> Json<Option<prisma::git_config::Data>> {
   println!("Updating config");
   let config = git2::Config::open_default().unwrap();
   let res = get_prisma_connection()
