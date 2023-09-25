@@ -2,3 +2,4 @@ target/
 *.md
 prisma/*
 !prisma/schema.prisma
+src/prisma.rs
