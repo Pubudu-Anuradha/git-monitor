@@ -50,11 +50,25 @@ const updateRepo = async (repo: Repository, managed: boolean | null) => {
   })
   loading.value = false
 }
+
+const credentials = ref<ConfigEntry[]>([])
+
+const getConfig = async () => {
+  credentials.value = filterCreds((await gitConfig.getDefaultConfig()).entries)
+}
+
+const filterCreds = (configEntries: ConfigEntry[]) => {
+  return configEntries.filter((entry) => entry.name.includes('user.'))
+}
 </script>
 
 <template>
   <div>
     <h1>Welcome to the test page</h1>
+    <v-btn @click="getConfig">get user details</v-btn>
+    <div v-for="cred in credentials" :key="cred.id">
+      {{ cred.name }} : {{ cred.value }}
+    </div>
     <div class="flex flex-col gap-2">
       <v-btn @click="fetchRepos">Fetch repos</v-btn>
       <v-btn @click="updateRepos">Update repos</v-btn>

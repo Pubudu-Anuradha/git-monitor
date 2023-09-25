@@ -40,3 +40,17 @@ model Branch {
 
   @@unique([name, repoDir])
 }
+
+model gitConfig {
+  id      Int              @id @default(autoincrement())
+  entries gitConfigEntry[]
+}
+
+model gitConfigEntry {
+  id          Int        @id @default(autoincrement())
+  name        String
+  value       String
+  gitConfig   gitConfig @relation(fields: [gitConfigId], references: [id])
+  gitConfigId Int
+  @@unique([name])
+}
