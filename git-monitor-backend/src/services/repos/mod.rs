@@ -1,9 +1,12 @@
 mod branches;
+mod commit;
 mod get;
+mod index;
 mod set;
 mod updates;
 mod utils;
 
+use self::{branches::create_local_branch_from_head, index::add_file_to_index};
 use actix_web::{
   web::{get, post, resource, scope},
   Scope,
@@ -11,8 +14,6 @@ use actix_web::{
 use get::{get_stored_repo_info, get_stored_repos_info};
 use set::set_stored_repo_info;
 use updates::update_repos_from_device;
-
-use self::branches::create_local_branch_from_head;
 
 pub fn repo_scope() -> Scope {
   scope("repos")
@@ -29,4 +30,5 @@ pub fn repo_scope() -> Scope {
           .to(create_local_branch_from_head),
       ),
     )
+    .service(resource("/repo/index/file").route(post().to(add_file_to_index)))
 }

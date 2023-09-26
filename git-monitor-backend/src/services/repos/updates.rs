@@ -98,7 +98,6 @@ pub async fn update_repo_from_device(repo: String) {
           )])
           .exec()
           .await;
-        println!("Deleted branches: {}", _res.unwrap_or(0));
         for (name, branch_type, is_head, upstream) in branches {
           let _res = get_prisma_connection()
             .await
