@@ -6,12 +6,9 @@ mod set;
 mod updates;
 mod utils;
 
-use self::{
-  branches::create_local_branch_from_head,
-  index::{add_file_to_index, remove_file_from_index},
-};
+use self::{branches::create_local_branch_from_head, index::add_file_to_index};
 use actix_web::{
-  web::{delete, get, post, resource, scope},
+  web::{get, post, resource, scope},
   Scope,
 };
 use get::{get_stored_repo_info, get_stored_repos_info};
@@ -33,9 +30,5 @@ pub fn repo_scope() -> Scope {
           .to(create_local_branch_from_head),
       ),
     )
-    .service(
-      resource("/repo/index/file")
-        .route(post().to(add_file_to_index))
-        .route(delete().to(remove_file_from_index)),
-    )
+    .service(resource("/repo/index/file").route(post().to(add_file_to_index)))
 }

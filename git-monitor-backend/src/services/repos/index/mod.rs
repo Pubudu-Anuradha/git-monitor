@@ -18,7 +18,7 @@ pub struct IndexFileRequest {
 
 pub async fn add_file_to_index(
   req: Json<IndexFileRequest>,
-) -> Json<Result<(), String>> {
+) -> Json<Result<bool, String>> {
   let abs_path = absolute_path(&req.path, req.absolute);
   let repo = Repository::open(Path::new(abs_path.as_str()));
   Json(match repo {
@@ -26,20 +26,10 @@ pub async fn add_file_to_index(
       let file = Path::new(&req.file_path);
       file::add_to_index(&repo, file)
     }
-    Err(_) => Err(format!("Repository @\"{}\" not found", abs_path)),
-  })
-}
-
-pub async fn remove_file_from_index(
-  req: Json<IndexFileRequest>,
-) -> Json<Result<(), String>> {
-  let abs_path = absolute_path(&req.path, req.absolute);
-  let repo = Repository::open(Path::new(abs_path.as_str()));
-  Json(match repo {
-    Ok(repo) => {
-      let file = Path::new(&req.file_path);
-      file::remove_from_index(&repo, file)
-    }
-    Err(_) => Err(format!("Repository @\"{}\" not found", abs_path)),
+    Err(e) => Err(format!(
+      "Error accessing repository @\"{}\": {}",
+      abs_path,
+      e.message()
+    )),
   })
 }
