@@ -1,13 +1,12 @@
-use super::errors::BranchErrors;
 use git2::{build::CheckoutBuilder, Branch, Repository};
 
 pub fn create<'a>(
   repo: &'a Repository,
   branch_name: &str,
   checkout: &bool,
-) -> Result<Branch<'a>, BranchErrors> {
+) -> Result<Branch<'a>, String> {
   if !Branch::name_is_valid(branch_name).is_ok_and(|f| f) {
-    Err(BranchErrors::MalformedName)
+    Err(format!("Malformed branch name '{}'", branch_name))
   } else if repo
     .find_branch(branch_name, git2::BranchType::Local)
     .is_ok()
@@ -15,7 +14,7 @@ pub fn create<'a>(
       .find_branch(branch_name, git2::BranchType::Remote)
       .is_ok()
   {
-    Err(BranchErrors::BranchAlreadyExists)
+    Err(format!("Branch with name '{}' already exists", branch_name))
   } else {
     let head_commit = repo.head().unwrap().peel_to_commit().unwrap();
     match repo.branch(branch_name, &head_commit, false) {
@@ -29,7 +28,7 @@ pub fn create<'a>(
       }
       Err(err) => {
         println!("{}", err.message());
-        Err(BranchErrors::CreateBranchError)
+        Err(format!("Error creating branch '{}'", branch_name))
       }
     }
   }

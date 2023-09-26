@@ -1,7 +1,5 @@
-mod errors;
 mod local;
 
-use self::errors::BranchErrors;
 use super::utils::absolute_path;
 use actix_web::web::Json;
 use git2::Repository;
@@ -22,7 +20,7 @@ pub struct CreateLocalBranchRequest {
 
 pub async fn create_local_branch_from_head<'a>(
   req: Json<CreateLocalBranchRequest>,
-) -> Json<Result<bool, BranchErrors>> {
+) -> Json<Result<bool, String>> {
   let abs_path = absolute_path(&req.path, req.absolute);
   let repo = Repository::open(Path::new(abs_path.as_str()));
   if repo.is_ok() {
@@ -33,6 +31,6 @@ pub async fn create_local_branch_from_head<'a>(
       },
     )
   } else {
-    Json(Err(BranchErrors::RepositoryNotFound))
+    Json(Err(format!("Repository @\"{}\" not found", abs_path)))
   }
 }
